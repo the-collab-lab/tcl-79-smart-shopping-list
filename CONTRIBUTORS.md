@@ -7,7 +7,7 @@ Add yourself as a contributor to this project as a Markdown link that links your
 ## Cohort Participants
 
 - [Queralt Guillen](https://github.com/Wyna-7) ✨
-- [Jonathan O'Riordan](https://github.com/joriordan332) 🤟🏼
+- [Jonathan O'Riordan](https://github.com/joriordan332) 🤟
   
 ## Mentors
 
