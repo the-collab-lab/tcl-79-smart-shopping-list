@@ -12,5 +12,6 @@ Add yourself as a contributor to this project as a Markdown link that links your
 ## Mentors
 
 - [Reda Baha](https://github.com/redapy) 😅
+- [Haris Shah](https://github.com/hariscs) ✌
 
 ## Code of Conduct Contacts
