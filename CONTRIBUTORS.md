@@ -8,7 +8,11 @@ Add yourself as a contributor to this project as a Markdown link that links your
 
 - [Queralt Guillen](https://github.com/Wyna-7) ✨
 - [Jonathan O'Riordan](https://github.com/joriordan332) 🤟
+<<<<<<< HEAD
 - [Huda Mabkhoot](https://github.com/Hudamabkhoot) 💪
+=======
+- [Marcia Mijnhijmer](https://github.com/marshjaja) 🤸🏾‍♀
+>>>>>>> 529529c39f4be4a53f6e7849a50b126b6961c8ad
 
 ## Mentors
 
