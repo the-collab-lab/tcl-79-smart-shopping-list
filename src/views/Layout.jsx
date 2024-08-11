@@ -2,6 +2,8 @@
 import { Outlet } from 'react-router-dom';
 
 import './Layout.css';
+import { useAuth } from '../api';
+import { SignInButton, SignOutButton } from '../api/useAuth';
 
 /**
  * TODO: The links defined in this file don't work!
@@ -12,6 +14,7 @@ import './Layout.css';
  */
 
 export function Layout() {
+	const {} = useAuth();
 	return (
 		<>
 			<div className="Layout">
