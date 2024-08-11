@@ -14,12 +14,21 @@ import { SignInButton, SignOutButton } from '../api/useAuth';
  */
 
 export function Layout() {
-	const {} = useAuth();
+	const { user } = useAuth();
+	console.log(user);
 	return (
 		<>
 			<div className="Layout">
 				<header className="Layout-header">
 					<h1>Smart shopping list</h1>
+					{!!user ? (
+						<div>
+							<SignOutButton />
+							<p>Welcome, {user.displayName}</p>
+						</div>
+					) : (
+						<SignInButton />
+					)}
 				</header>
 				<main className="Layout-main">
 					<Outlet />
