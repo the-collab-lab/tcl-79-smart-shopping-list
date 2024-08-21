@@ -25,6 +25,18 @@ export function ManageList() {
 				<label htmlFor="itemName">Enter the item name: </label>
 				<input type="text" name="itemName" id="itemName" required />
 			</div>
+			<div className="buy-again">
+				<label htmlFor="buyAgain">
+					When do you think you will need to purchase this item again?
+				</label>
+				<select name="buyAgain" id="buyAgain">
+					{/*replace values with numbers?*/}
+					<option value="soon">Soon (7 days)</option>
+					<option value="kindOfSoon">Kind of soon (14 days)</option>
+					<option value="notSoon">Not soon (30 days)</option>
+				</select>
+			</div>
+			<button type="submit">Add Item</button>
 		</form>
 	);
 }
