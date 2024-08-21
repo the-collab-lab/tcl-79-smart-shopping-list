@@ -1,6 +1,6 @@
 import { SingleList } from '../components';
 import './Home.css';
-import ShoppingList from '../components/ShoppingList';
+import CreateShoppingList from '../components/CreateShoppingList';
 
 export function Home({ user, data, setListPath }) {
 	//console.log(user)
@@ -19,7 +19,7 @@ export function Home({ user, data, setListPath }) {
 					/>
 				))}
 			</ul>
-			<ShoppingList user={user} />
+			<CreateShoppingList user={user} setListPath={setListPath} />
 		</div>
 	);
 }
