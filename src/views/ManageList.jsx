@@ -7,19 +7,16 @@ export function ManageList({ listPath }) {
 	});
 
 	const handleSubmit = async (event) => {
-		console.log(formData, 'inside submit');
 		try {
 			event.preventDefault();
 			await addItem(listPath, formData);
 			alert(`${formData.itemName} was added to the list successfully`);
 		} catch (error) {
-			console.error('error', error);
 			alert(`There was a problem adding ${formData.itemName} to the list`);
 		}
 	};
 
 	const handleChange = (event) => {
-		console.log(formData);
 		let { name, value } = event.target;
 		setFormData((prevFormData) => ({ ...prevFormData, [name]: value }));
 	};
