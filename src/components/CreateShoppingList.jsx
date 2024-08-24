@@ -13,8 +13,8 @@ export default function CreateShoppingList({ user, setListPath }) {
 		e.preventDefault();
 
 		try {
-			const listDocRef = await createList(userId, userEmail, listName);
-			setListPath(listDocRef);
+			const listPath = await createList(userId, userEmail, listName);
+			setListPath(listPath);
 			toast.success('List created successfully!');
 			navigate('/list');
 		} catch (error) {
