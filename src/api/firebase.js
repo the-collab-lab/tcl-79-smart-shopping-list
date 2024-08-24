@@ -6,6 +6,7 @@ import {
 	doc,
 	onSnapshot,
 	updateDoc,
+	addDoc,
 } from 'firebase/firestore';
 import { useEffect, useState } from 'react';
 import { db } from './config';
@@ -127,6 +128,8 @@ export async function createList(userId, userEmail, listName) {
 	updateDoc(userDocumentRef, {
 		sharedLists: arrayUnion(listDocRef),
 	});
+
+	return listDocRef.path;
 }
 
 /**
@@ -163,15 +166,12 @@ export async function shareList(listPath, currentUserId, recipientEmail) {
  */
 export async function addItem(listPath, { itemName, daysUntilNextPurchase }) {
 	const listCollectionRef = collection(db, listPath, 'items');
-	// TODO: Replace this call to console.log with the appropriate
-	// Firebase function, so this information is sent to your database!
-	const newItemEntry = doc(listCollectionRef);
-	return setDoc(newItemEntry, {
+	return addDoc(listCollectionRef, {
 		dateCreated: new Date(),
 		// NOTE: This is null because the item has just been created.
 		// We'll use updateItem to put a Date here when the item is purchased!
 		dateLastPurchased: null,
-		dateNextPurchased: getFutureDate(parseInt(daysUntilNextPurchase)),
+		dateNextPurchased: getFutureDate(daysUntilNextPurchase),
 		name: itemName,
 		totalPurchases: 0,
 	});
