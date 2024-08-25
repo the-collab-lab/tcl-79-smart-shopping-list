@@ -5,6 +5,7 @@ import './Layout.css';
 import { useAuth } from '../api';
 import { SignInButton, SignOutButton } from '../api/useAuth';
 import { NavLink } from 'react-router-dom';
+import { Toaster } from 'react-hot-toast';
 
 /**
  * TODO: The links defined in this file don't work!
@@ -46,6 +47,7 @@ export function Layout() {
 						</NavLink>
 					</div>
 				</nav>
+				<Toaster />
 			</div>
 		</>
 	);
