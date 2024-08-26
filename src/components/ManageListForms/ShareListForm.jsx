@@ -8,6 +8,7 @@ export default function ShareListForm({ listPath, user }) {
 	const handleSubmit = async (event) => {
 		event.preventDefault();
 		await shareList(listPath, currentUserId, recipientEmail);
+		setRecipientEmail('');
 	};
 
 	return (
