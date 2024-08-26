@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { createList } from '../api/firebase';
+import { createList } from '../../api/firebase';
 import { useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
 
