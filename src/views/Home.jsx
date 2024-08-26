@@ -1,6 +1,6 @@
 import { SingleList } from '../components';
 import './Home.css';
-import CreateShoppingList from '../components/Home/CreateShoppingList';
+import CreateShoppingList from '../components/CreateShoppingList';
 
 export function Home({ user, data, setListPath }) {
 	//console.log(user)

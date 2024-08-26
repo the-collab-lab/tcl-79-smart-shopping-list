@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { addItem } from '../../api/firebase';
 
-export default function ManageListForm({ listPath }) {
+export default function AddItemForm({ listPath }) {
 	const [formData, setFormData] = useState({
 		itemName: '',
 		daysUntilNextPurchase: '',
