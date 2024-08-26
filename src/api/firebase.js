@@ -141,7 +141,7 @@ export async function shareList(listPath, currentUserId, recipientEmail) {
 	try {
 		// Check if current user is owner.
 		if (!listPath.includes(currentUserId)) {
-			toast.error('Current user is not list owner');
+			toast.error('You are not the owner of this list');
 			return;
 		}
 		// Get the document for the recipient user.
@@ -150,7 +150,7 @@ export async function shareList(listPath, currentUserId, recipientEmail) {
 		// If the recipient user doesn't exist, we can't share the list.
 
 		if (!recipientDoc.exists()) {
-			toast.error('Recipient Email doesnt exist');
+			toast.error('Recipient email does not exist');
 			return;
 		}
 		// Add the list to the recipient user's sharedLists array.
