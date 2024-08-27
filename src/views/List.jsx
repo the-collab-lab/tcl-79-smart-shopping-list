@@ -1,13 +1,29 @@
-import { ListItem } from '../components';
+import { useEffect, useState } from 'react';
+import { ListItem, SearchBar } from '../components';
 
 export function List({ data }) {
+	const [search, setSearch] = useState('');
+	const [displayData, setDisplayData] = useState(data);
+
+	useEffect(() => {
+		console.log('data', data);
+		if (search === '') {
+			setDisplayData(data);
+		} else {
+			const filteredItems = data.filter(
+				(item) =>
+					item.name !== '' &&
+					item.name.toLowerCase().includes(search.toLowerCase()),
+			);
+			setDisplayData(filteredItems);
+		}
+	}, [search]);
+
 	return (
 		<>
-			<p>
-				Hello from the <code>/list</code> page!
-			</p>
+			<SearchBar setSearch={setSearch} search={search} />
 			<ul>
-				{data.map((item) => (
+				{displayData.map((item) => (
 					<ListItem key={item.id} name={item.name} />
 				))}
 			</ul>
