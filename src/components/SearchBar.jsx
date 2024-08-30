@@ -4,7 +4,7 @@ export function SearchBar({ data, setDisplayData, setSearch, search }) {
 		setSearch(searchTerm);
 
 		const filteredUsers = data.filter((item) =>
-			item.name.toLowerCase().includes(searchTerm.toLowerCase()),
+			item.name.toLowerCase().includes(searchTerm.trim().toLowerCase()),
 		);
 		setDisplayData(filteredUsers);
 	};
