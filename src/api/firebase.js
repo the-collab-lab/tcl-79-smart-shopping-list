@@ -11,7 +11,7 @@ import {
 import { useEffect, useState } from 'react';
 import { db } from './config';
 import { getFutureDate } from '../utils';
-
+import toast from 'react-hot-toast';
 /**
  * A custom hook that subscribes to the user's shopping lists in our Firestore
  * database and returns new data whenever the lists change.
@@ -138,23 +138,32 @@ export async function createList(userId, userEmail, listName) {
  * @param {string} recipientEmail The email of the user to share the list with.
  */
 export async function shareList(listPath, currentUserId, recipientEmail) {
-	// Check if current user is owner.
-	if (!listPath.includes(currentUserId)) {
-		return;
+	try {
+		// Check if current user is owner.
+		if (!listPath.includes(currentUserId)) {
+			toast.error('You are not the owner of this list');
+			return;
+		}
+		// Get the document for the recipient user.
+		const usersCollectionRef = collection(db, 'users');
+		const recipientDoc = await getDoc(doc(usersCollectionRef, recipientEmail));
+		// If the recipient user doesn't exist, we can't share the list.
+
+		if (!recipientDoc.exists()) {
+			toast.error('Recipient email does not exist');
+			return;
+		}
+		// Add the list to the recipient user's sharedLists array.
+		const listDocumentRef = doc(db, listPath);
+		const userDocumentRef = doc(db, 'users', recipientEmail);
+		await updateDoc(userDocumentRef, {
+			sharedLists: arrayUnion(listDocumentRef),
+		});
+
+		toast.success('List shared successfully!');
+	} catch (error) {
+		toast.error('Failed to share, try again.');
 	}
-	// Get the document for the recipient user.
-	const usersCollectionRef = collection(db, 'users');
-	const recipientDoc = await getDoc(doc(usersCollectionRef, recipientEmail));
-	// If the recipient user doesn't exist, we can't share the list.
-	if (!recipientDoc.exists()) {
-		return;
-	}
-	// Add the list to the recipient user's sharedLists array.
-	const listDocumentRef = doc(db, listPath);
-	const userDocumentRef = doc(db, 'users', recipientEmail);
-	updateDoc(userDocumentRef, {
-		sharedLists: arrayUnion(listDocumentRef),
-	});
 }
 
 /**
