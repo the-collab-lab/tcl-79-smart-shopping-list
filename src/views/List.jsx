@@ -1,13 +1,24 @@
-import { ListItem } from '../components';
+import { useEffect, useState } from 'react';
+import { ListItem, SearchBar } from '../components';
 
 export function List({ data }) {
+	const [search, setSearch] = useState('');
+	const [displayData, setDisplayData] = useState([]);
+
+	useEffect(() => {
+		setDisplayData([...data]);
+	}, [data]);
+
 	return (
 		<>
-			<p>
-				Hello from the <code>/list</code> page!
-			</p>
+			<SearchBar
+				setDisplayData={setDisplayData}
+				data={data}
+				setSearch={setSearch}
+				search={search}
+			/>
 			<ul>
-				{data.map((item) => (
+				{displayData.map((item) => (
 					<ListItem key={item.id} name={item.name} />
 				))}
 			</ul>

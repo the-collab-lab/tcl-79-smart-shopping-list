@@ -1,10 +1,9 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import { Outlet } from 'react-router-dom';
+import { Outlet, NavLink } from 'react-router-dom';
 
 import './Layout.css';
 import { useAuth } from '../api';
 import { SignInButton, SignOutButton } from '../api/useAuth';
-import { NavLink } from 'react-router-dom';
 import { Toaster } from 'react-hot-toast';
 
 /**
