@@ -17,3 +17,5 @@ Add yourself as a contributor to this project as a Markdown link that links your
 - [Haris Shah](https://github.com/hariscs) ✌
 
 ## Code of Conduct Contacts
+
+- [Ayu Adiati](https://github.com/adiati98) 🤩
