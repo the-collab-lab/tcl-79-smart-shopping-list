@@ -7,6 +7,7 @@ import {
 	onSnapshot,
 	updateDoc,
 	addDoc,
+	FieldValue,
 } from 'firebase/firestore';
 import { useEffect, useState } from 'react';
 import { db } from './config';
@@ -186,12 +187,26 @@ export async function addItem(listPath, { itemName, daysUntilNextPurchase }) {
 	});
 }
 
-export async function updateItem() {
-	/**
-	 * TODO: Fill this out so that it uses the correct Firestore function
-	 * to update an existing item. You'll need to figure out what arguments
-	 * this function must accept!
-	 */
+export async function updateItem(listPath, id) {
+	//console.log(itemName)
+	//const listCollectionRef = collection(db, listPath, 'items');
+	const itemRef = doc(collection(db, listPath, 'items'), id);
+	//const itemtDoc = await getDoc(itemRef);
+	//console.log(parseInt(itemtDoc._document.data.value.mapValue.fields.totalPurchases.integerValue) + 1)
+	try {
+		await updateDoc(itemRef, {
+			dateLastPurchased: new Date(),
+			//totalPurchases is undefiend to be debugged
+			totalPurchases: {
+				...prevFields,
+				integerValue: parseInt(totalPurchases.integerValue) + 1,
+			},
+		});
+
+		console.log('item updated');
+	} catch (error) {
+		console.log(error);
+	}
 }
 
 export async function deleteItem() {

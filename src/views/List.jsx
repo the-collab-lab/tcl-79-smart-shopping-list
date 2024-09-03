@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { ListItem, SearchBar } from '../components';
 
-export function List({ data }) {
+export function List({ data, listPath }) {
 	const [search, setSearch] = useState('');
 	const [displayData, setDisplayData] = useState([]);
 
@@ -19,7 +19,12 @@ export function List({ data }) {
 			/>
 			<ul>
 				{displayData.map((item) => (
-					<ListItem key={item.id} name={item.name} />
+					<ListItem
+						key={item.id}
+						name={item.name}
+						listPath={listPath}
+						id={item.id}
+					/>
 				))}
 			</ul>
 		</>
