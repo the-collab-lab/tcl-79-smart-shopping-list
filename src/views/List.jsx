@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 import { ListItem, SearchBar } from '../components';
 import { useNavigate } from 'react-router-dom';
-import addFirstItem from '../pictures/addFirstItem.png';
 
 export function List({ data }) {
 	const [search, setSearch] = useState('');
@@ -27,15 +26,7 @@ export function List({ data }) {
 			</ul>
 			{data.length === 0 && (
 				<div>
-					<img
-						className="addItemPNG"
-						src={addFirstItem}
-						alt="add item example"
-					/>
-					<p>
-						You currently have no shopping items click below to add items like
-						shown above
-					</p>
+					<p>You currently have no shopping items. Click below to add items</p>
 					<button id="addFirstItem" onClick={() => navigate('/manage-list')}>
 						Start adding items!
 					</button>
