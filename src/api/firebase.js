@@ -183,10 +183,11 @@ export async function addItem(listPath, { itemName, daysUntilNextPurchase }) {
 		dateNextPurchased: getFutureDate(daysUntilNextPurchase),
 		name: itemName,
 		totalPurchases: 0,
+		checked: false,
 	});
 }
 
-export async function updateItem(listPath, id) {
+export async function updateItem(listPath, id, checked) {
 	//const listCollectionRef = collection(db, listPath, 'items');
 	const itemRef = doc(collection(db, listPath, 'items'), id);
 	try {
@@ -199,6 +200,7 @@ export async function updateItem(listPath, id) {
 			dateLastPurchased: new Date(),
 			//totalPurchases is undefiend to be debugged
 			totalPurchases: currentTotalPurchases + 1,
+			checked: checked,
 		});
 
 		console.log('item updated');

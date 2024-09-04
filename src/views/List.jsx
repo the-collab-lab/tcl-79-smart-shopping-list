@@ -24,6 +24,7 @@ export function List({ data, listPath }) {
 						name={item.name}
 						listPath={listPath}
 						id={item.id}
+						isChecked={item.checked}
 					/>
 				))}
 			</ul>
