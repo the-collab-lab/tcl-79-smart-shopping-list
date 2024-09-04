@@ -7,7 +7,6 @@ import {
 	onSnapshot,
 	updateDoc,
 	addDoc,
-	FieldValue,
 } from 'firebase/firestore';
 import { useEffect, useState } from 'react';
 import { db } from './config';
@@ -188,19 +187,18 @@ export async function addItem(listPath, { itemName, daysUntilNextPurchase }) {
 }
 
 export async function updateItem(listPath, id) {
-	//console.log(itemName)
 	//const listCollectionRef = collection(db, listPath, 'items');
 	const itemRef = doc(collection(db, listPath, 'items'), id);
-	//const itemtDoc = await getDoc(itemRef);
-	//console.log(parseInt(itemtDoc._document.data.value.mapValue.fields.totalPurchases.integerValue) + 1)
 	try {
+		const itemDoc = await getDoc(itemRef);
+		const data = itemDoc.data();
+		const currentTotalPurchases = data.totalPurchases;
+		//console.log(currentTotalPurchases)
+
 		await updateDoc(itemRef, {
 			dateLastPurchased: new Date(),
 			//totalPurchases is undefiend to be debugged
-			totalPurchases: {
-				...prevFields,
-				integerValue: parseInt(totalPurchases.integerValue) + 1,
-			},
+			totalPurchases: currentTotalPurchases + 1,
 		});
 
 		console.log('item updated');
