@@ -1,37 +1,33 @@
 import './ListItem.css';
 import { updateItem } from '../api';
 import { useEffect } from 'react';
+import { ONE_DAY_IN_MILLISECONDS } from '../utils/dates';
 
-export function ListItem({ name, listPath, id, isChecked }) {
+export function ListItem({ name, listPath, id, isChecked, datePurchased }) {
 	const handleOnChange = async (event) => {
-		//console.log(event);
-		let { value, checked } = event.target;
-		console.log('value before update', value);
-		await updateItem(listPath, id, !checked);
-		if (value) {
-			console.log('value inside if block', value);
-			setTimeout(async () => {
-				await updateItem(listPath, id, !checked);
-				//checked = isChecked;
-				console.log('fjkdsvhjkfdsh', value);
-			}, 5000);
-		}
-		console.log(value);
+		let { checked } = event.target;
+		if (!checked) return;
+
+		await updateItem(listPath, id, checked);
 	};
-	// useEffect(() => {
-	// 	setTimeout(async () => {
-	// 		await updateItem(listPath, id, !checked);
-	// 	}, 1000);
-	// }, [checked]);
+
+	useEffect(() => {
+		const today = new Date().getTime();
+		const datePurchasedInMillis = datePurchased.toMillis();
+
+		if (isChecked && today - datePurchasedInMillis >= ONE_DAY_IN_MILLISECONDS) {
+			updateItem(listPath, id, !isChecked);
+		}
+	}, []);
 
 	return (
 		<li className="ListItem">
 			<input
 				type="checkbox"
 				id={id}
-				value={isChecked}
 				onChange={handleOnChange}
 				checked={isChecked}
+				disabled={isChecked}
 			/>
 			<label htmlFor={`${id}`}>{name}</label>
 		</li>

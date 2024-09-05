@@ -188,20 +188,25 @@ export async function addItem(listPath, { itemName, daysUntilNextPurchase }) {
 }
 
 export async function updateItem(listPath, id, checked) {
-	//const listCollectionRef = collection(db, listPath, 'items');
-	const itemRef = doc(collection(db, listPath, 'items'), id);
+	const listCollectionRef = collection(db, listPath, 'items');
+	const itemRef = doc(listCollectionRef, id);
+
 	try {
 		const itemDoc = await getDoc(itemRef);
 		const data = itemDoc.data();
 		const currentTotalPurchases = data.totalPurchases;
-		//console.log(currentTotalPurchases)
 
-		await updateDoc(itemRef, {
-			dateLastPurchased: new Date(),
-			//totalPurchases is undefiend to be debugged
-			totalPurchases: currentTotalPurchases + 1,
-			checked: checked,
-		});
+		if (checked) {
+			await updateDoc(itemRef, {
+				dateLastPurchased: new Date(),
+				totalPurchases: currentTotalPurchases + 1,
+				checked: checked,
+			});
+		} else {
+			await updateDoc(itemRef, {
+				checked: checked,
+			});
+		}
 
 		console.log('item updated');
 	} catch (error) {
