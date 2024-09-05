@@ -207,10 +207,8 @@ export async function updateItem(listPath, id, checked) {
 				checked: checked,
 			});
 		}
-
-		console.log('item updated');
 	} catch (error) {
-		console.log(error);
+		console.error('There was an error updating the item state: ', error);
 	}
 }
 

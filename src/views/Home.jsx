@@ -3,7 +3,6 @@ import './Home.css';
 import CreateShoppingList from '../components/CreateShoppingList';
 
 export function Home({ user, data, setListPath }) {
-	//console.log(user)
 	return (
 		<div className="Home">
 			<p>
