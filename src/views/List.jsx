@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { ListItem, SearchBar } from '../components';
 import { useNavigate } from 'react-router-dom';
 
-export function List({ data }) {
+export function List({ data, listPath }) {
 	const [search, setSearch] = useState('');
 	const [displayData, setDisplayData] = useState([]);
 	const navigate = useNavigate();
@@ -21,7 +21,14 @@ export function List({ data }) {
 			/>
 			<ul>
 				{displayData.map((item) => (
-					<ListItem key={item.id} name={item.name} />
+					<ListItem
+						key={item.id}
+						name={item.name}
+						listPath={listPath}
+						id={item.id}
+						isChecked={item.checked}
+						datePurchased={item.dateLastPurchased}
+					/>
 				))}
 			</ul>
 			{data.length === 0 && (
