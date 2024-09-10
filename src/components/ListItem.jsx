@@ -3,12 +3,19 @@ import { updateItem } from '../api';
 import { useEffect } from 'react';
 import { ONE_DAY_IN_MILLISECONDS } from '../utils/dates';
 
-export function ListItem({ name, listPath, id, isChecked, datePurchased }) {
+export function ListItem({
+	name,
+	listPath,
+	id,
+	isChecked,
+	datePurchased,
+	dayInterval,
+}) {
 	const handleOnChange = async (event) => {
 		let { checked } = event.target;
 		if (!checked) return;
 
-		await updateItem(listPath, id, checked);
+		await updateItem(listPath, id, checked, dayInterval);
 	};
 
 	useEffect(() => {
@@ -16,7 +23,7 @@ export function ListItem({ name, listPath, id, isChecked, datePurchased }) {
 		const datePurchasedInMillis = datePurchased?.toMillis();
 
 		if (isChecked && today - datePurchasedInMillis >= ONE_DAY_IN_MILLISECONDS) {
-			updateItem(listPath, id, !isChecked);
+			updateItem(listPath, id, !isChecked, dayInterval);
 		}
 	}, []);
 

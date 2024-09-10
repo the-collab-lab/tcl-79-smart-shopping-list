@@ -28,6 +28,7 @@ export function List({ data, listPath }) {
 						id={item.id}
 						isChecked={item.checked}
 						datePurchased={item.dateLastPurchased}
+						dayInterval={item.dayInterval}
 					/>
 				))}
 			</ul>

@@ -12,6 +12,8 @@ import { useEffect, useState } from 'react';
 import { db } from './config';
 import { getFutureDate } from '../utils';
 import toast from 'react-hot-toast';
+import { calculateEstimate } from '@the-collab-lab/shopping-list-utils';
+import { ONE_DAY_IN_MILLISECONDS } from '../utils/dates';
 /**
  * A custom hook that subscribes to the user's shopping lists in our Firestore
  * database and returns new data whenever the lists change.
@@ -181,13 +183,14 @@ export async function addItem(listPath, { itemName, daysUntilNextPurchase }) {
 		// We'll use updateItem to put a Date here when the item is purchased!
 		dateLastPurchased: null,
 		dateNextPurchased: getFutureDate(daysUntilNextPurchase),
+		dayInterval: daysUntilNextPurchase,
 		name: itemName,
 		totalPurchases: 0,
 		checked: false,
 	});
 }
 
-export async function updateItem(listPath, id, checked) {
+export async function updateItem(listPath, id, checked, dayInterval) {
 	const listCollectionRef = collection(db, listPath, 'items');
 	const itemRef = doc(listCollectionRef, id);
 
@@ -195,12 +198,30 @@ export async function updateItem(listPath, id, checked) {
 		const itemDoc = await getDoc(itemRef);
 		const data = itemDoc.data();
 		const currentTotalPurchases = data.totalPurchases;
+		const currentDayInterval = data.dayInterval;
+		const dateLastPurchasedInMillis = data.dateLastPurchased
+			? data.dateLastPurchased.toMillis()
+			: data.dateCreated.toMillis();
+		const daysSinceLastPurchase = Date.now() - dateLastPurchasedInMillis;
+		console.log('DaysSinceLastPurchase ', daysSinceLastPurchase);
+
+		//conditional assignment, if x < 1 -> 1, else drop decimals return whole number of days
+		console.log(
+			'DaysSinceLastPurchase sb ms',
+			daysSinceLastPurchase / ONE_DAY_IN_MILLISECONDS,
+		);
 
 		if (checked) {
 			await updateDoc(itemRef, {
 				dateLastPurchased: new Date(),
 				totalPurchases: currentTotalPurchases + 1,
 				checked: checked,
+				dayInterval: daysSinceLastPurchase,
+				dateNextPurchased: calculateEstimate(
+					currentDayInterval,
+					daysSinceLastPurchase,
+					currentTotalPurchases,
+				), //format Timestamps -> September 4, 2024 at 11:11:11 AM UTC+2
 			});
 		} else {
 			await updateDoc(itemRef, {
