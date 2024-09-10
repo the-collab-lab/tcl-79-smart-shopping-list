@@ -13,7 +13,7 @@ export function ListItem({ name, listPath, id, isChecked, datePurchased }) {
 
 	useEffect(() => {
 		const today = new Date().getTime();
-		const datePurchasedInMillis = datePurchased.toMillis();
+		const datePurchasedInMillis = datePurchased?.toMillis();
 
 		if (isChecked && today - datePurchasedInMillis >= ONE_DAY_IN_MILLISECONDS) {
 			updateItem(listPath, id, !isChecked);

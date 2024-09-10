@@ -1,15 +1,25 @@
 import { useState } from 'react';
 import { addItem } from '../../api/firebase';
 
-export default function AddItemForm({ listPath }) {
+export default function AddItemForm({ listPath, data }) {
 	const [formData, setFormData] = useState({
 		itemName: '',
 		daysUntilNextPurchase: '',
 	});
 
 	const handleSubmit = async (event) => {
+		event.preventDefault();
 		try {
-			event.preventDefault();
+			console.log(formData.itemName);
+			const submittedItem = formData.itemName
+				.toLowerCase()
+				.replace(/[.,/#!$%^&*;:{}=\-_`~()\s]/g, '')
+				.replace(/[^\w\s]/gi, '');
+			setFormData((prevData) => ({
+				...prevData,
+				itemName: submittedItem,
+			}));
+			console.log('after set form data,', submittedItem);
 			await addItem(listPath, formData);
 			alert(`${formData.itemName} was added to the list successfully`);
 		} catch (error) {
