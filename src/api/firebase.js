@@ -7,13 +7,14 @@ import {
 	onSnapshot,
 	updateDoc,
 	addDoc,
+	Timestamp,
 } from 'firebase/firestore';
 import { useEffect, useState } from 'react';
 import { db } from './config';
 import { getFutureDate } from '../utils';
 import toast from 'react-hot-toast';
 import { calculateEstimate } from '@the-collab-lab/shopping-list-utils';
-import { ONE_DAY_IN_MILLISECONDS } from '../utils/dates';
+import { getDaysBetweenDates } from '../utils/dates';
 /**
  * A custom hook that subscribes to the user's shopping lists in our Firestore
  * database and returns new data whenever the lists change.
@@ -190,38 +191,39 @@ export async function addItem(listPath, { itemName, daysUntilNextPurchase }) {
 	});
 }
 
-export async function updateItem(listPath, id, checked, dayInterval) {
+export async function updateItem(listPath, id, checked) {
 	const listCollectionRef = collection(db, listPath, 'items');
 	const itemRef = doc(listCollectionRef, id);
 
 	try {
 		const itemDoc = await getDoc(itemRef);
 		const data = itemDoc.data();
+		const today = new Date();
 		const currentTotalPurchases = data.totalPurchases;
 		const currentDayInterval = data.dayInterval;
-		const dateLastPurchasedInMillis = data.dateLastPurchased
-			? data.dateLastPurchased.toMillis()
-			: data.dateCreated.toMillis();
-		const daysSinceLastPurchase = Date.now() - dateLastPurchasedInMillis;
-		console.log('DaysSinceLastPurchase ', daysSinceLastPurchase);
+		const dateLastPurchasedJavaScriptObject = data.dateLastPurchased
+			? data.dateLastPurchased.toDate()
+			: today;
 
-		//conditional assignment, if x < 1 -> 1, else drop decimals return whole number of days
-		console.log(
-			'DaysSinceLastPurchase sb ms',
-			daysSinceLastPurchase / ONE_DAY_IN_MILLISECONDS,
+		const daysSinceLastPurchase = getDaysBetweenDates(
+			today,
+			dateLastPurchasedJavaScriptObject,
+		);
+		const estimate = calculateEstimate(
+			currentDayInterval,
+			daysSinceLastPurchase,
+			currentTotalPurchases,
 		);
 
 		if (checked) {
 			await updateDoc(itemRef, {
-				dateLastPurchased: new Date(),
+				dateLastPurchased: Timestamp.fromDate(new Date()),
 				totalPurchases: currentTotalPurchases + 1,
 				checked: checked,
 				dayInterval: daysSinceLastPurchase,
-				dateNextPurchased: calculateEstimate(
-					currentDayInterval,
-					daysSinceLastPurchase,
-					currentTotalPurchases,
-				), //format Timestamps -> September 4, 2024 at 11:11:11 AM UTC+2
+				dateNextPurchased: Timestamp.fromMillis(
+					today.setDate(today.getDate() + estimate),
+				),
 			});
 		} else {
 			await updateDoc(itemRef, {
