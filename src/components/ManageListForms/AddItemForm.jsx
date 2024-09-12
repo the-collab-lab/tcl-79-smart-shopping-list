@@ -10,33 +10,23 @@ export default function AddItemForm({ listPath, data }) {
 
 	const handleSubmit = async (event) => {
 		event.preventDefault();
-		// (for later) maybe simplified the replace and added trim() to remove spaces like this:
-		// .toLowerCase().replace(/[^\w]/g, '').trim();
-		// (for later) maybe make this a function and move it into utils
+
 		const formattedItemName = formData.itemName
 			.toLowerCase()
-			.replace(/[.,/#!$%^&*;:{}=\-_~()\s]/g, '')
-			.replace(/[^\w\s]/gi, '');
+			.replace(/[^a-z]/g, '');
 
-		console.log('formattedItemName', formattedItemName);
+		const match = data.find((item) => item.name === formattedItemName);
 
 		try {
-			// (for later) replace .filter with .some to make this true or false because it didnt work in some cases
-			const filteredList = data?.filter((item) => {
-				item.name === formData.itemName;
-			});
-
-			console.log('filteredList', filteredList);
-
-			if (filteredList.length === 0) {
-				// (done) replaced setFormData we had before with { ...formData, itemName: formattedItemName }
+			if (!match) {
 				await addItem(listPath, { ...formData, itemName: formattedItemName });
-				alert(`${formattedItemName} was added to the list successfully`);
+				toast.success(`${formattedItemName} added to the list successfully`);
 			} else {
 				toast.error(`${formattedItemName} is already on your list`);
+				return;
 			}
 		} catch (error) {
-			alert(`There was a problem adding ${formData.itemName} to the list`);
+			toast.error(`Failed to add ${formattedItemName} to the list`);
 		}
 	};
 
