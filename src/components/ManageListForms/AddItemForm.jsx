@@ -20,13 +20,13 @@ export default function AddItemForm({ listPath, data }) {
 		try {
 			if (!match) {
 				await addItem(listPath, { ...formData, itemName: formattedItemName });
-				toast.success(`${formattedItemName} added to the list successfully`);
+				toast.success(`${formattedItemName} was added to your list`);
 			} else {
 				toast.error(`${formattedItemName} is already on your list`);
 				return;
 			}
 		} catch (error) {
-			toast.error(`Failed to add ${formattedItemName} to the list`);
+			toast.error(`Failed to add ${formattedItemName}`);
 		}
 	};
 
