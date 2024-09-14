@@ -203,7 +203,7 @@ export async function updateItem(listPath, id, checked) {
 		const currentDayInterval = data.dayInterval;
 		const dateLastPurchasedJavaScriptObject = data.dateLastPurchased
 			? data.dateLastPurchased.toDate()
-			: today;
+			: data.dateCreated.toDate();
 
 		const daysSinceLastPurchase = getDaysBetweenDates(
 			today,
@@ -217,13 +217,11 @@ export async function updateItem(listPath, id, checked) {
 
 		if (checked) {
 			await updateDoc(itemRef, {
-				dateLastPurchased: Timestamp.fromDate(new Date()),
+				dateLastPurchased: today,
 				totalPurchases: currentTotalPurchases + 1,
 				checked: checked,
 				dayInterval: daysSinceLastPurchase,
-				dateNextPurchased: Timestamp.fromMillis(
-					today.setDate(today.getDate() + estimate),
-				),
+				dateNextPurchased: getFutureDate(estimate),
 			});
 		} else {
 			await updateDoc(itemRef, {
