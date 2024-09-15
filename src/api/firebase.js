@@ -191,30 +191,29 @@ export async function addItem(listPath, { itemName, daysUntilNextPurchase }) {
 	});
 }
 
-export async function updateItem(listPath, id, checked) {
+// checked is coming from the handleOnChange function in the ListItem.jsx,so it is not part of the item data.
+export async function updateItem(listPath, checked, itemData) {
+	const { id } = itemData;
 	const listCollectionRef = collection(db, listPath, 'items');
 	const itemRef = doc(listCollectionRef, id);
+	const today = new Date();
+	const currentTotalPurchases = itemData.totalPurchases;
+	const currentDayInterval = itemData.dayInterval;
+	const dateLastPurchasedJavaScriptObject = itemData.dateLastPurchased
+		? itemData.dateLastPurchased.toDate()
+		: itemData.dateCreated.toDate();
+
+	const daysSinceLastPurchase = getDaysBetweenDates(
+		today,
+		dateLastPurchasedJavaScriptObject,
+	);
+	const estimate = calculateEstimate(
+		currentDayInterval,
+		daysSinceLastPurchase,
+		currentTotalPurchases,
+	);
 
 	try {
-		const itemDoc = await getDoc(itemRef);
-		const data = itemDoc.data();
-		const today = new Date();
-		const currentTotalPurchases = data.totalPurchases;
-		const currentDayInterval = data.dayInterval;
-		const dateLastPurchasedJavaScriptObject = data.dateLastPurchased
-			? data.dateLastPurchased.toDate()
-			: data.dateCreated.toDate();
-
-		const daysSinceLastPurchase = getDaysBetweenDates(
-			today,
-			dateLastPurchasedJavaScriptObject,
-		);
-		const estimate = calculateEstimate(
-			currentDayInterval,
-			daysSinceLastPurchase,
-			currentTotalPurchases,
-		);
-
 		if (checked) {
 			await updateDoc(itemRef, {
 				dateLastPurchased: today,
