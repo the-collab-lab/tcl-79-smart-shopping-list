@@ -7,11 +7,14 @@ import {
 	onSnapshot,
 	updateDoc,
 	addDoc,
+	Timestamp,
 } from 'firebase/firestore';
 import { useEffect, useState } from 'react';
 import { db } from './config';
 import { getFutureDate } from '../utils';
 import toast from 'react-hot-toast';
+import { calculateEstimate } from '@the-collab-lab/shopping-list-utils';
+import { getDaysBetweenDates } from '../utils/dates';
 /**
  * A custom hook that subscribes to the user's shopping lists in our Firestore
  * database and returns new data whenever the lists change.
@@ -181,26 +184,43 @@ export async function addItem(listPath, { itemName, daysUntilNextPurchase }) {
 		// We'll use updateItem to put a Date here when the item is purchased!
 		dateLastPurchased: null,
 		dateNextPurchased: getFutureDate(daysUntilNextPurchase),
+		dayInterval: daysUntilNextPurchase,
 		name: itemName,
 		totalPurchases: 0,
 		checked: false,
 	});
 }
 
-export async function updateItem(listPath, id, checked) {
+// checked is coming from the handleOnChange function in the ListItem.jsx,so it is not part of the item data.
+export async function updateItem(listPath, checked, itemData) {
+	const { id } = itemData;
 	const listCollectionRef = collection(db, listPath, 'items');
 	const itemRef = doc(listCollectionRef, id);
+	const today = new Date();
+	const currentTotalPurchases = itemData.totalPurchases;
+	const currentDayInterval = itemData.dayInterval;
+	const dateLastPurchasedJavaScriptObject = itemData.dateLastPurchased
+		? itemData.dateLastPurchased.toDate()
+		: itemData.dateCreated.toDate();
+
+	const daysSinceLastPurchase = getDaysBetweenDates(
+		today,
+		dateLastPurchasedJavaScriptObject,
+	);
+	const estimate = calculateEstimate(
+		currentDayInterval,
+		daysSinceLastPurchase,
+		currentTotalPurchases,
+	);
 
 	try {
-		const itemDoc = await getDoc(itemRef);
-		const data = itemDoc.data();
-		const currentTotalPurchases = data.totalPurchases;
-
 		if (checked) {
 			await updateDoc(itemRef, {
-				dateLastPurchased: new Date(),
+				dateLastPurchased: today,
 				totalPurchases: currentTotalPurchases + 1,
 				checked: checked,
+				dayInterval: daysSinceLastPurchase,
+				dateNextPurchased: getFutureDate(estimate),
 			});
 		} else {
 			await updateDoc(itemRef, {

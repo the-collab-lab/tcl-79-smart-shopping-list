@@ -10,3 +10,11 @@ export const ONE_DAY_IN_MILLISECONDS = 86400000;
 export function getFutureDate(offset) {
 	return new Date(Date.now() + offset * ONE_DAY_IN_MILLISECONDS);
 }
+export function getDaysBetweenDates(startDate, endDate) {
+	const differenceInMillis = startDate.getTime() - endDate.getTime();
+	const daysSinceLastPurchase =
+		Math.round(differenceInMillis / ONE_DAY_IN_MILLISECONDS) === 0
+			? 1
+			: Math.round(differenceInMillis / ONE_DAY_IN_MILLISECONDS);
+	return daysSinceLastPurchase;
+}
