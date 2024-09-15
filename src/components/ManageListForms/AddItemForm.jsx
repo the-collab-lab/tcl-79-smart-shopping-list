@@ -1,19 +1,32 @@
 import { useState } from 'react';
 import { addItem } from '../../api/firebase';
+import toast from 'react-hot-toast';
 
-export default function AddItemForm({ listPath }) {
+export default function AddItemForm({ listPath, data }) {
 	const [formData, setFormData] = useState({
 		itemName: '',
 		daysUntilNextPurchase: '',
 	});
 
 	const handleSubmit = async (event) => {
+		event.preventDefault();
+
+		const formattedItemName = formData.itemName
+			.toLowerCase()
+			.replace(/[^a-z]/g, '');
+
+		const match = data.find((item) => item.name === formattedItemName);
+
 		try {
-			event.preventDefault();
-			await addItem(listPath, formData);
-			alert(`${formData.itemName} was added to the list successfully`);
+			if (!match) {
+				await addItem(listPath, { ...formData, itemName: formattedItemName });
+				toast.success(`${formattedItemName} was added to your list`);
+			} else {
+				toast.error(`${formattedItemName} is already on your list`);
+				return;
+			}
 		} catch (error) {
-			alert(`There was a problem adding ${formData.itemName} to the list`);
+			toast.error(`Failed to add ${formattedItemName}`);
 		}
 	};
 
