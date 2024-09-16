@@ -54,9 +54,6 @@ export function ListItem({
 
 	return (
 		<li className="ListItem">
-			<button type="button" id={id} onClick={handleDelete}>
-				delete
-			</button>
 			<input
 				type="checkbox"
 				id={id}
@@ -65,6 +62,9 @@ export function ListItem({
 				disabled={isChecked}
 			/>
 			<label htmlFor={`${id}`}>{name}</label>
+			<button type="button" id={id} onClick={handleDelete}>
+				Delete
+			</button>
 		</li>
 	);
 }
