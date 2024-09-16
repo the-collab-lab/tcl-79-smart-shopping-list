@@ -1,7 +1,8 @@
 import './ListItem.css';
-import { updateItem } from '../api';
+import { updateItem, deleteItem } from '../api';
 import { useEffect } from 'react';
 import { ONE_DAY_IN_MILLISECONDS } from '../utils/dates';
+import toast from 'react-hot-toast';
 
 export function ListItem({
 	listPath,
@@ -26,11 +27,13 @@ export function ListItem({
 		});
 	};
 
-	const deleteItem = async (id) => {
+	const handleDelete = async () => {
 		const confirm = window.confirm(`are you sure you want to delete ${name}?`);
-
 		if (confirm) {
-			console.log(confirm, id);
+			await deleteItem(listPath, id);
+			toast.success(`${name} was deleted from the list`);
+		} else {
+			toast.error('Deletion canceled');
 		}
 	};
 
@@ -51,7 +54,7 @@ export function ListItem({
 
 	return (
 		<li className="ListItem">
-			<button type="button" id={id} onClick={() => deleteItem(id)}>
+			<button type="button" id={id} onClick={handleDelete}>
 				delete
 			</button>
 			<input
