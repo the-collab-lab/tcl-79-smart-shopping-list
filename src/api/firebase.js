@@ -241,10 +241,4 @@ export async function deleteItem(listPath, id) {
 	} catch (error) {
 		console.error('Error deleting your item', error);
 	}
-
-	/**
-	 * TODO: Fill this out so that it uses the correct Firestore function
-	 * to delete an existing item. You'll need to figure out what arguments
-	 * this function must accept!
-	 */
 }
