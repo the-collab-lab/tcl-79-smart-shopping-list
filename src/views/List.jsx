@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { ListItem, SearchBar } from '../components';
 import { useNavigate } from 'react-router-dom';
+import { comparePurchaseUrgency } from '../api/firebase';
 
 export function List({ data, listPath }) {
 	const [search, setSearch] = useState('');
@@ -10,6 +11,9 @@ export function List({ data, listPath }) {
 	useEffect(() => {
 		setDisplayData([...data]);
 	}, [data]);
+
+	const test = comparePurchaseUrgency([2, 8, 1, 10, 300, 6, 4]);
+	console.log('test', test);
 
 	return (
 		<>
@@ -31,6 +35,7 @@ export function List({ data, listPath }) {
 						totalPurchases={item.totalPurchases}
 						dayInterval={item.dayInterval}
 						dateCreated={item.dateCreated}
+						dateNextPurchased={item.dateNextPurchased}
 					/>
 				))}
 			</ul>

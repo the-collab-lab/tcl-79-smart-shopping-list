@@ -239,3 +239,7 @@ export async function deleteItem() {
 	 * this function must accept!
 	 */
 }
+
+export function comparePurchaseUrgency(arr) {
+	return arr.sort();
+}
