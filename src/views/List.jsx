@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { ListItem, SearchBar } from '../components';
 import { useNavigate } from 'react-router-dom';
 import { comparePurchaseUrgency } from '../api/firebase';
+import { getDaysBetweenDates } from '../utils/dates';
 
 export function List({ data, listPath }) {
 	const [search, setSearch] = useState('');
@@ -9,11 +10,39 @@ export function List({ data, listPath }) {
 	const navigate = useNavigate();
 
 	useEffect(() => {
-		setDisplayData([...data]);
-	}, [data]);
+		const getIndicator = (item) => {
+			const dateLastPurchasedJavaScriptObject = item.dateLastPurchased
+				? item.dateLastPurchased.toDate()
+				: item.dateCreated.toDate();
 
-	const test = comparePurchaseUrgency([2, 8, 1, 10, 300, 6, 4]);
-	console.log('test', test);
+			const daysSinceLastPurchase = getDaysBetweenDates(
+				new Date(),
+				dateLastPurchasedJavaScriptObject,
+			);
+
+			const daysUntilNextPurchase = getDaysBetweenDates(
+				item.dateNextPurchased.toDate(),
+				new Date(),
+			);
+
+			if (daysSinceLastPurchase > 60) {
+				return 'Inactive';
+			} else if (daysSinceLastPurchase > 30 && daysSinceLastPurchase < 60) {
+				return 'Overdue';
+			} else if (daysUntilNextPurchase <= 7) {
+				return 'Soon';
+			} else if (daysUntilNextPurchase > 7 && daysUntilNextPurchase < 30) {
+				return 'Kind of soon';
+			} else if (daysUntilNextPurchase >= 30) {
+				return 'Not soon';
+			}
+		};
+		const arrayWithIndicator = data.map((item) => ({
+			...item,
+			indicator: getIndicator(item),
+		}));
+		setDisplayData([...comparePurchaseUrgency(arrayWithIndicator)]);
+	}, [data]);
 
 	return (
 		<>
@@ -36,6 +65,7 @@ export function List({ data, listPath }) {
 						dayInterval={item.dayInterval}
 						dateCreated={item.dateCreated}
 						dateNextPurchased={item.dateNextPurchased}
+						indicator={item.indicator}
 					/>
 				))}
 			</ul>

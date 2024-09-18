@@ -241,5 +241,22 @@ export async function deleteItem() {
 }
 
 export function comparePurchaseUrgency(arr) {
-	return arr.sort();
+	const soonArray = arr
+		.filter((item) => item.indicator === 'Soon')
+		.sort((a, b) => (a.name > b.name ? 1 : -1));
+	const kindOfSoon = arr
+		.filter((item) => item.indicator === 'Kind of soon')
+		.sort((a, b) => (a.name > b.name ? 1 : -1));
+	const notSoon = arr
+		.filter((item) => item.indicator === 'Not soon')
+		.sort((a, b) => (a.name > b.name ? 1 : -1));
+	const inactive = arr
+		.filter((item) => item.indicator === 'Inactive')
+		.sort((a, b) => (a.name > b.name ? 1 : -1));
+	const overdue = arr
+		.filter((item) => item.indicator === 'Overdue')
+		.sort((a, b) => (a.name > b.name ? 1 : -1));
+	return overdue.length > 0
+		? overdue.concat(soonArray, kindOfSoon, notSoon, inactive)
+		: soonArray.concat(kindOfSoon, notSoon, inactive);
 }

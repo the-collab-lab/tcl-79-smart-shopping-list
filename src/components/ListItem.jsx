@@ -1,7 +1,7 @@
 import './ListItem.css';
 import { updateItem } from '../api';
 import { useEffect } from 'react';
-import { ONE_DAY_IN_MILLISECONDS, getDaysBetweenDates } from '../utils/dates';
+import { ONE_DAY_IN_MILLISECONDS } from '../utils/dates';
 
 export function ListItem({
 	listPath,
@@ -9,10 +9,10 @@ export function ListItem({
 	id,
 	isChecked,
 	dateLastPurchased,
-	dateNextPurchased,
 	totalPurchases,
 	dayInterval,
 	dateCreated,
+	indicator,
 }) {
 	const handleOnChange = async (event) => {
 		let { checked } = event.target;
@@ -25,36 +25,6 @@ export function ListItem({
 			dayInterval,
 			dateCreated,
 		});
-	};
-
-	//We are repeating logic form firebase file, maybe we should extract this into a function?
-
-	const dateLastPurchasedJavaScriptObject = dateLastPurchased
-		? dateLastPurchased.toDate()
-		: dateCreated.toDate();
-
-	const daysSinceLastPurchase = getDaysBetweenDates(
-		new Date(),
-		dateLastPurchasedJavaScriptObject,
-	);
-
-	const daysUntilNextPurchase = getDaysBetweenDates(
-		dateNextPurchased.toDate(),
-		new Date(),
-	);
-
-	//_________
-
-	const getIndicator = () => {
-		if (daysSinceLastPurchase > 60) {
-			return 'Inactive';
-		} else if (daysUntilNextPurchase <= 7) {
-			return 'Soon';
-		} else if (daysUntilNextPurchase > 7 && daysUntilNextPurchase < 30) {
-			return 'Kind of soon';
-		} else if (daysUntilNextPurchase >= 30) {
-			return 'Not soon';
-		}
 	};
 
 	useEffect(() => {
@@ -83,7 +53,7 @@ export function ListItem({
 			/>
 			<label htmlFor={`${id}`}>{name}</label>
 			{/* Add CSS to dynamically change bg-color for badges? */}
-			<p className="TimeBadge">{getIndicator()}</p>
+			<p className="TimeBadge">{indicator}</p>
 		</li>
 	);
 }
