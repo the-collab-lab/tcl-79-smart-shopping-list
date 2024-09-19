@@ -1,16 +1,16 @@
-export function SearchBar({ data, setDisplayData, setSearch, search }) {
+export function SearchBar({ allData, setDisplayData, setSearch, search }) {
 	const handleInputChange = (e) => {
 		const searchTerm = e.target.value;
 		setSearch(searchTerm);
 
-		const filteredUsers = data.filter((item) =>
+		const filteredData = allData.filter((item) =>
 			item.name.toLowerCase().includes(searchTerm.trim().toLowerCase()),
 		);
-		setDisplayData(filteredUsers);
-	};
 
+		setDisplayData(filteredData);
+	};
 	const handleClear = () => {
-		setDisplayData(data);
+		setDisplayData(allData);
 		setSearch('');
 	};
 

@@ -7,7 +7,6 @@ import {
 	onSnapshot,
 	updateDoc,
 	addDoc,
-	Timestamp,
 } from 'firebase/firestore';
 import { useEffect, useState } from 'react';
 import { db } from './config';
@@ -241,22 +240,31 @@ export async function deleteItem() {
 }
 
 export function comparePurchaseUrgency(arr) {
-	const soonArray = arr
-		.filter((item) => item.indicator === 'Soon')
-		.sort((a, b) => (a.name > b.name ? 1 : -1));
-	const kindOfSoon = arr
-		.filter((item) => item.indicator === 'Kind of soon')
-		.sort((a, b) => (a.name > b.name ? 1 : -1));
-	const notSoon = arr
-		.filter((item) => item.indicator === 'Not soon')
-		.sort((a, b) => (a.name > b.name ? 1 : -1));
-	const inactive = arr
-		.filter((item) => item.indicator === 'Inactive')
-		.sort((a, b) => (a.name > b.name ? 1 : -1));
-	const overdue = arr
-		.filter((item) => item.indicator === 'Overdue')
-		.sort((a, b) => (a.name > b.name ? 1 : -1));
-	return overdue.length > 0
-		? overdue.concat(soonArray, kindOfSoon, notSoon, inactive)
-		: soonArray.concat(kindOfSoon, notSoon, inactive);
+	const groupedItems = {
+		Overdue: [],
+		Soon: [],
+		'Kind of soon': [],
+		'Not soon': [],
+		Inactive: [],
+	};
+	arr.forEach((item) => {
+		if (groupedItems[item.indicator]) {
+			groupedItems[item.indicator].push(item);
+		}
+	});
+	Object.keys(groupedItems).forEach((key) => {
+		groupedItems[key].sort((a, b) => (a.name > b.name ? 1 : -1));
+	});
+	return groupedItems['Overdue'].length > 0
+		? groupedItems['Overdue'].concat(
+				groupedItems['Soon'],
+				groupedItems['Kind of soon'],
+				groupedItems['Not soon'],
+				groupedItems['Inactive'],
+			)
+		: groupedItems['Soon'].concat(
+				groupedItems['Kind of soon'],
+				groupedItems['Not soon'],
+				groupedItems['Inactive'],
+			);
 }
