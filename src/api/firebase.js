@@ -13,7 +13,7 @@ import { db } from './config';
 import { getFutureDate } from '../utils';
 import toast from 'react-hot-toast';
 import { calculateEstimate } from '@the-collab-lab/shopping-list-utils';
-import { getDaysBetweenDates } from '../utils/dates';
+import { getDaysSinceLastPurchase } from '../utils/helpers';
 /**
  * A custom hook that subscribes to the user's shopping lists in our Firestore
  * database and returns new data whenever the lists change.
@@ -198,14 +198,8 @@ export async function updateItem(listPath, checked, itemData) {
 	const today = new Date();
 	const currentTotalPurchases = itemData.totalPurchases;
 	const currentDayInterval = itemData.dayInterval;
-	const dateLastPurchasedJavaScriptObject = itemData.dateLastPurchased
-		? itemData.dateLastPurchased.toDate()
-		: itemData.dateCreated.toDate();
 
-	const daysSinceLastPurchase = getDaysBetweenDates(
-		today,
-		dateLastPurchasedJavaScriptObject,
-	);
+	const daysSinceLastPurchase = getDaysSinceLastPurchase(itemData);
 	const estimate = calculateEstimate(
 		currentDayInterval,
 		daysSinceLastPurchase,

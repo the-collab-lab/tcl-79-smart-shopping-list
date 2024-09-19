@@ -1,14 +1,15 @@
 import { getDaysBetweenDates } from './dates';
 
-export function getIndicator(item) {
+export function getDaysSinceLastPurchase(item) {
 	const dateLastPurchasedJavaScriptObject = item.dateLastPurchased
 		? item.dateLastPurchased.toDate()
 		: item.dateCreated.toDate();
 
-	const daysSinceLastPurchase = getDaysBetweenDates(
-		new Date(),
-		dateLastPurchasedJavaScriptObject,
-	);
+	return getDaysBetweenDates(new Date(), dateLastPurchasedJavaScriptObject);
+}
+
+export function getIndicator(item) {
+	const daysSinceLastPurchase = getDaysSinceLastPurchase(item);
 
 	const daysUntilNextPurchase = getDaysBetweenDates(
 		item.dateNextPurchased.toDate(),
