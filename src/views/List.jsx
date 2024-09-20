@@ -15,8 +15,9 @@ export function List({ data, listPath }) {
 			...item,
 			indicator: getIndicator(item),
 		}));
-		setAllData([...comparePurchaseUrgency(arrayWithIndicator)]);
-		setDisplayData([...comparePurchaseUrgency(arrayWithIndicator)]);
+		const urgencyData = [...comparePurchaseUrgency(arrayWithIndicator)];
+		setAllData(urgencyData);
+		setDisplayData(urgencyData);
 	}, [data]);
 
 	return (

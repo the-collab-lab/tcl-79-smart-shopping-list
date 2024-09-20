@@ -18,7 +18,7 @@ export function getIndicator(item) {
 
 	if (daysSinceLastPurchase > 60) {
 		return 'Inactive';
-	} else if (daysSinceLastPurchase > 30 && daysSinceLastPurchase < 60) {
+	} else if (daysUntilNextPurchase < 0 && daysSinceLastPurchase < 60) {
 		return 'Overdue';
 	} else if (daysUntilNextPurchase <= 7) {
 		return 'Soon';
