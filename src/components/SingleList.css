@@ -8,3 +8,14 @@
 .SingleList-label {
 	margin-left: 0.2em;
 }
+
+.ListItem {
+	display: flex;
+	flex-direction: row;
+	justify-content: flex-start;
+}
+
+.TimeBadge {
+	margin: 8px;
+	font-size: small;
+}

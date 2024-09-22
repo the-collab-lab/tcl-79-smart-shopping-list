@@ -1,21 +1,30 @@
 import { useEffect, useState } from 'react';
 import { ListItem, SearchBar } from '../components';
 import { useNavigate } from 'react-router-dom';
+import { comparePurchaseUrgency } from '../api/firebase';
+import { getIndicator } from '../utils/helpers';
 
 export function List({ data, listPath }) {
 	const [search, setSearch] = useState('');
+	const [allData, setAllData] = useState([]);
 	const [displayData, setDisplayData] = useState([]);
 	const navigate = useNavigate();
 
 	useEffect(() => {
-		setDisplayData([...data]);
+		const arrayWithIndicator = data.map((item) => ({
+			...item,
+			indicator: getIndicator(item),
+		}));
+		const urgencyData = [...comparePurchaseUrgency(arrayWithIndicator)];
+		setAllData(urgencyData);
+		setDisplayData(urgencyData);
 	}, [data]);
 
 	return (
 		<>
 			<SearchBar
 				setDisplayData={setDisplayData}
-				data={data}
+				allData={allData}
 				setSearch={setSearch}
 				search={search}
 			/>
@@ -31,6 +40,8 @@ export function List({ data, listPath }) {
 						totalPurchases={item.totalPurchases}
 						dayInterval={item.dayInterval}
 						dateCreated={item.dateCreated}
+						dateNextPurchased={item.dateNextPurchased}
+						indicator={item.indicator}
 					/>
 				))}
 			</ul>

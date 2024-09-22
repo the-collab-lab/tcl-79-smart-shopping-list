@@ -13,6 +13,7 @@ export function ListItem({
 	totalPurchases,
 	dayInterval,
 	dateCreated,
+	indicator,
 }) {
 	const handleOnChange = async (event) => {
 		let { checked } = event.target;
@@ -62,6 +63,8 @@ export function ListItem({
 				disabled={isChecked}
 			/>
 			<label htmlFor={`${id}`}>{name}</label>
+			{/* Add CSS to dynamically change bg-color for badges? */}
+			<p className="TimeBadge">{indicator}</p>
 			<button type="button" id={id} onClick={handleDelete}>
 				Delete
 			</button>
