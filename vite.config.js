@@ -3,6 +3,7 @@ import eslint from '@nabla/vite-plugin-eslint';
 import react from '@vitejs/plugin-react';
 import svgr from 'vite-plugin-svgr';
 import { VitePWA } from 'vite-plugin-pwa';
+import path from 'path';
 
 const PWAConfig = {
 	includeAssets: ['favicon.ico', 'robots.txt'],
@@ -63,6 +64,11 @@ export default defineConfig(({ mode }) => ({
 		VitePWA(PWAConfig),
 	],
 	server: { open: true, port: 3000 },
+	resolve: {
+		alias: {
+			'@': path.resolve(__dirname, './src'),
+		},
+	},
 	test: {
 		globals: true,
 		environment: 'jsdom',
