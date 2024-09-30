@@ -5,6 +5,7 @@ import './Layout.css';
 import { useAuth } from '../api';
 import { SignInButton, SignOutButton } from '../api/useAuth';
 import { Toaster } from 'react-hot-toast';
+import { Button } from '@/components/ui/button';
 
 /**
  * TODO: The links defined in this file don't work!
@@ -20,29 +21,62 @@ export function Layout() {
 		<>
 			<div className="Layout">
 				<header className="Layout-header">
-					<h1>Smart shopping list</h1>
-					{!!user ? (
-						<div>
-							<SignOutButton />
-							<p>Welcome, {user.displayName}</p>
+					<div className="flex items-center justify-between p-4">
+						<div className="w-full lg:w-auto text-center lg:text-left">
+							<NavLink to="/" className="Nav-link">
+								<img
+									src="/src/LOGO-FRAME.png"
+									alt="GrocerEase logo"
+									className="Logo mx-auto lg:mx-0"
+								/>
+							</NavLink>
 						</div>
-					) : (
-						<SignInButton />
-					)}
+						<div className="hidden lg:flex items-center space-x-4">
+							<p>Welcome, {user.displayName}</p>
+							<NavLink to="/" className="Nav-link">
+								<Button variant="link" className="text-white text-base">
+									Home
+								</Button>
+							</NavLink>
+							<NavLink to="/list" className="Nav-link">
+								<Button variant="link" className="text-white text-base">
+									List
+								</Button>
+							</NavLink>
+							{!!user ? (
+								<>
+									<SignOutButton>
+										<Button variant="outline">Sign Out</Button>
+									</SignOutButton>
+								</>
+							) : (
+								<SignInButton>
+									<Button variant="outline">Sign In</Button>
+								</SignInButton>
+							)}
+						</div>
+						{!!user && (
+							<div className="block lg:hidden">
+								<SignOutButton>
+									<Button variant="outline">Sign Out</Button>
+								</SignOutButton>
+							</div>
+						)}
+					</div>
 				</header>
+
 				<main className="Layout-main">
 					<Outlet />
 				</main>
-				<nav className="Nav">
-					<div className="Nav-container">
+
+				{/* Mobile/Tablet Navbar code */}
+				<nav className="block lg:hidden fixed bottom-0 left-0 right-0 shadow-lg p-4 text-white">
+					<div className="flex justify-around items-center">
 						<NavLink to="/" className="Nav-link">
-							Home
+							<Button variant="ghost">Home</Button>
 						</NavLink>
 						<NavLink to="/list" className="Nav-link">
-							List
-						</NavLink>
-						<NavLink to="/manage-list" className="Nav-link">
-							Manage List
+							<Button variant="ghost">List</Button>
 						</NavLink>
 					</div>
 				</nav>

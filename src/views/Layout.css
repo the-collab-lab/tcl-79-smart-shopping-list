@@ -35,7 +35,7 @@
 	width: min(72ch, 100%);
 }
 
-.Nav {
+/* .Nav {
 	background-color: var(--color-bg);
 	border-top: 1px solid var(--color-border);
 	bottom: 0;
@@ -46,8 +46,8 @@
 	place-content: center;
 	position: fixed;
 	width: 100%;
-}
-
+} */
+/* 
 .Nav-container {
 	display: flex;
 	flex-direction: row;
@@ -70,4 +70,4 @@
 .Nav-link.active {
 	text-decoration-thickness: 0.22em;
 	text-underline-offset: 0.1em;
-}
+} */
