@@ -17,6 +17,10 @@ import { Button } from '@/components/ui/button';
 
 export function Layout() {
 	const { user } = useAuth();
+	const linkClass = ({ isActive }) =>
+		isActive
+			? 'bg-pink-500 text-red-500 hover:bg-pink-500 hover:text-white rounded-2xl px-3 py-2 p-4'
+			: 'text-yellow-500 hover:bg-pink-500 hover:text-white rounded-2xl px-3 py-2 p-4';
 	return (
 		<>
 			<div className="Layout">
@@ -32,13 +36,13 @@ export function Layout() {
 							</NavLink>
 						</div>
 						<div className="hidden lg:flex items-center space-x-4">
-							<p>Welcome, {user.displayName}</p>
-							<NavLink to="/" className="Nav-link">
+							{!!user && <p>Welcome, {user.displayName}</p>}
+							<NavLink to="/" className={linkClass}>
 								<Button variant="link" className="text-white text-base">
 									Home
 								</Button>
 							</NavLink>
-							<NavLink to="/list" className="Nav-link">
+							<NavLink to="/list" className={linkClass}>
 								<Button variant="link" className="text-white text-base">
 									List
 								</Button>
@@ -69,14 +73,16 @@ export function Layout() {
 					<Outlet />
 				</main>
 
-				{/* Mobile/Tablet Navbar code */}
+				{/* Mobile/Tablet bottom nav here */}
 				<nav className="block lg:hidden fixed bottom-0 left-0 right-0 shadow-lg p-4 text-white">
 					<div className="flex justify-around items-center">
-						<NavLink to="/" className="Nav-link">
-							<Button variant="ghost">Home</Button>
+						<NavLink to="/" className={linkClass}>
+							<Button className="text-white text-base">Home</Button>
 						</NavLink>
-						<NavLink to="/list" className="Nav-link">
-							<Button variant="ghost">List</Button>
+						<NavLink to="/list" className={linkClass}>
+							<Button variant="link" className="text-white text-base">
+								List
+							</Button>
 						</NavLink>
 					</div>
 				</nav>
