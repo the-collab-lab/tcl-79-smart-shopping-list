@@ -10,6 +10,10 @@ export default {
 				sm: 'calc(var(--radius) - 4px)',
 			},
 			colors: {},
+			transitionDuration: {
+				50: '50ms',
+				25: '25ms',
+			},
 		},
 	},
 	plugins: [require('tailwindcss-animate')],
