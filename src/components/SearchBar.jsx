@@ -1,3 +1,5 @@
+import { Input } from './ui/input';
+
 export function SearchBar({ allData, setDisplayData, setSearch, search }) {
 	const handleInputChange = (e) => {
 		const searchTerm = e.target.value;
@@ -9,24 +11,16 @@ export function SearchBar({ allData, setDisplayData, setSearch, search }) {
 
 		setDisplayData(filteredData);
 	};
-	const handleClear = () => {
-		setDisplayData(allData);
-		setSearch('');
-	};
 
 	return (
-		<form>
-			<label htmlFor="item-filter">Search for an item here: </label>
-			<input
+		<form className="text-black">
+			<Input
 				type="text"
 				id="item-filter"
 				value={search}
-				placeholder="Search here"
+				placeholder="Search..."
 				onChange={handleInputChange}
 			/>
-			<button type="button" onClick={handleClear}>
-				Clear Input
-			</button>
 		</form>
 	);
 }
