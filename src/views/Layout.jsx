@@ -21,8 +21,8 @@ export function Layout() {
 	const { user } = useAuth();
 	const linkClass = ({ isActive }) =>
 		isActive
-			? 'bg-green-200 hover:bg-green-200 dark:bg-green-400 dark:hover:bg-green-400  rounded-2xl px-3 py-2 p-4'
-			: 'hover:bg-green-200 dark:hover:bg-green-400 hover:text-white rounded-2xl px-3 py-2 p-4';
+			? 'bg-light-green dark:bg-primary-green dark:hover:bg-primary-green rounded-xl px-3 py-2 p-4'
+			: 'hover:bg-light-green dark:hover:bg-green-400 dark:hover:text-white rounded-xl px-3 py-2 p-4';
 
 	const [darkMode, setDarkMode] = useState(false);
 
@@ -33,7 +33,7 @@ export function Layout() {
 	return (
 		<>
 			<div className={`${darkMode && 'dark'}`}>
-				<div className="Layout text-black dark:text-white bg-white dark:bg-slate-950">
+				<div className="Layout text-black dark:text-white bg-white dark:bg-black">
 					<header className="Layout-header">
 						{/* Desktop top nav here */}
 						<div className="hidden lg:flex items-center justify-between p-4">
@@ -75,7 +75,7 @@ export function Layout() {
 								{!!user ? <SignOutButton /> : <SignInButton />}
 								<Button
 									onClick={toggleDarkMode}
-									className="absolute w-16 bottom-16 right-16 p-2 rounded-full text-pink-600  font-semibold"
+									className="absolute w-16 bottom-16 right-16 p-2 rounded-full text-primary-pink hover:text-primary-pink hover:text-opacity-60 font-semibold"
 								>
 									{darkMode ? <Eclipse /> : <Sun />}
 								</Button>
@@ -104,7 +104,7 @@ export function Layout() {
 								{!!user ? <SignOutButton /> : <SignInButton />}
 								<Button
 									onClick={toggleDarkMode}
-									className=" p-2  text-pink-600 rounded-full  font-semibold"
+									className=" p-2  text-primary-pink hover:text-primary-pink hover:text-opacity-60 rounded-full  font-semibold"
 								>
 									{darkMode ? <Eclipse /> : <Sun />}
 								</Button>
