@@ -7,7 +7,6 @@ import {
 	onSnapshot,
 	updateDoc,
 	addDoc,
-	Timestamp,
 	deleteDoc,
 } from 'firebase/firestore';
 import { useEffect, useState } from 'react';

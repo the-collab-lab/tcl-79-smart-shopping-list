@@ -18,13 +18,17 @@ export function Layout() {
 	const { user } = useAuth();
 	return (
 		<>
-			<div className="Layout">
-				<header className="Layout-header">
-					<h1>Smart shopping list</h1>
+			<div className="flex flex-col h-[100dvh] items-center">
+				<header className="flex-col w-48 mb-20">
+					<h1 className="text-[36px] font-[monda] font-extrabold">
+						GrocerEase
+					</h1>
 					{!!user ? (
 						<div>
-							<SignOutButton />
-							<p>Welcome, {user.displayName}</p>
+							{/* <SignOutButton /> */}
+							<p className="text-xs text-end font-extralight">
+								Welcome, {user.displayName}!
+							</p>
 						</div>
 					) : (
 						<SignInButton />

@@ -23,16 +23,27 @@ export default function CreateShoppingList({ user, setListPath }) {
 	};
 
 	return (
-		<form onSubmit={handleSubmit}>
-			<label htmlFor="shoppingList">Enter Shopping List name:</label>
-			<input
-				id="shoppingList"
-				type="text"
-				value={listName}
-				onChange={(e) => setListName(e.target.value)}
-				required
-			/>
-			<button type="submit">Create Shopping List</button>
+		<form onSubmit={handleSubmit} className="flex flex-row space-x-3 items-end">
+			<div className="flex flex-col">
+				<label htmlFor="shoppingList" className="text-xs font-extralight">
+					Create a new list
+				</label>
+				<input
+					className="border-[1px] rounded h-[3rem] hover:border-blue-700"
+					id="shoppingList"
+					type="text"
+					value={listName}
+					onChange={(e) => setListName(e.target.value)}
+					required
+				/>
+			</div>
+
+			<button
+				type="submit"
+				className="bg-[#FBB300] hover:bg-[#fbb400c9] text-black font-bold h-[3rem] p-3 rounded align-bottom"
+			>
+				Create +
+			</button>
 		</form>
 	);
 }

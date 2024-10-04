@@ -6,7 +6,10 @@ import { useAuth, useShoppingListData, useShoppingLists } from './api';
 
 import { useStateWithStorage } from './utils';
 
+import { useState } from 'react';
+
 export function App() {
+	const [isModalOpen, setIsModalOpen] = useState(false);
 	/**
 	 * This custom hook takes the path of a shopping list
 	 * in our database and syncs it with localStorage for later use.
@@ -40,6 +43,11 @@ export function App() {
 	 */
 	const data = useShoppingListData(listPath);
 
+	const handleShareModalClick = () => {
+		console.log('isModalOpen', isModalOpen);
+		setIsModalOpen(!isModalOpen);
+	};
+
 	return (
 		<Router>
 			<Routes>
@@ -47,7 +55,14 @@ export function App() {
 					<Route
 						index
 						element={
-							<Home user={user} data={lists} setListPath={setListPath} />
+							<Home
+								user={user}
+								data={lists}
+								listPath={listPath}
+								setListPath={setListPath}
+								isModalOpen={isModalOpen}
+								handleShareModalClick={handleShareModalClick}
+							/>
 						}
 					/>
 					<Route
