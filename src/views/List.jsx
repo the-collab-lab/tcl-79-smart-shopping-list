@@ -56,8 +56,8 @@ export function List({ data, listPath }) {
 				/>
 				<Dialog open={isOpen} onOpenChange={handleAddModal}>
 					<DialogTrigger asChild>
-						<Button>
-							<SquarePlus />
+						<Button className="bg-transparen hover:bg-transparen">
+							<SquarePlus className="h-7 w-7 text-pink dark:text-green transition-opacity hover:opacity-75" />
 						</Button>
 					</DialogTrigger>
 					<DialogContent>

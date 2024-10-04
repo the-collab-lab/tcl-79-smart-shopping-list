@@ -119,7 +119,10 @@ export default function AddItemForm({ listPath, data, handleOpenModal }) {
 				</div>
 			</div>
 			<div className="flex w-full">
-				<Button type="submit" className="bg-pink text-white rounded-lg w-full">
+				<Button
+					type="submit"
+					className="bg-pink text-white rounded-xl w-full hover:bg-pink hover:bg-opacity-75 text-sm"
+				>
 					Add Item
 				</Button>
 			</div>
