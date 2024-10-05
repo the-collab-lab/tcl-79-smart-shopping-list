@@ -1,13 +1,8 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import { useState } from 'react';
-import { Outlet, NavLink } from 'react-router-dom';
-
+import { Outlet } from 'react-router-dom';
 import './Layout.css';
-import { useAuth } from '../api';
-import { SignInButton, SignOutButton } from '../api/useAuth';
 import { Toaster } from 'react-hot-toast';
-import { Button } from '@/components/ui/button';
-import { Eclipse, House, ListPlus, Sun } from 'lucide-react';
 import { NavBar } from '@/components/NavBar';
 
 /**
