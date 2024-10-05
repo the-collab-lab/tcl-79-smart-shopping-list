@@ -32,16 +32,33 @@ export const SignOutButton = () => (
  * @see https://firebase.google.com/docs/auth/web/start#set_an_authentication_state_observer_and_get_user_data
  */
 export const useAuth = () => {
-	const [user, setUser] = useState(null);
+	const [user, setUser] = useState(() => {
+		const storedUser = localStorage.getItem('user');
+		return storedUser ? JSON.parse(storedUser) : null;
+	});
 
 	useEffect(() => {
-		auth.onAuthStateChanged((user) => {
-			setUser(user);
+		const unsubscribe = auth.onAuthStateChanged((user) => {
 			if (user) {
+				setUser(user);
+				localStorage.setItem('user', JSON.stringify(user));
 				addUserToDatabase(user);
+			} else {
+				setUser(null);
+				localStorage.removeItem('user');
 			}
 		});
+		return () => unsubscribe();
 	}, []);
 
-	return { user };
+	const signIn = async () => {
+		await signInWithPopup(auth, new GoogleAuthProvider());
+	};
+
+	const signOut = async () => {
+		await auth.signOut();
+		localStorage.removeItem('user');
+	};
+
+	return { user, signIn, signOut };
 };
