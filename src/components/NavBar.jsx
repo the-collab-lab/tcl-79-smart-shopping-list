@@ -11,7 +11,7 @@ export function NavBar({ darkMode, toggleDarkMode }) {
 	const linkClass = ({ isActive }) =>
 		isActive
 			? 'bg-light-green dark:bg-primary-green dark:hover:bg-primary-green rounded-xl px-3 py-2 p-4'
-			: 'hover:bg-light-green dark:hover:bg-green-400 dark:hover:text-white rounded-xl px-3 py-2 p-4';
+			: 'hover:bg-light-green dark:hover:bg-primary-green dark:hover:text-white rounded-xl px-3 py-2 p-4';
 
 	return (
 		<>
@@ -62,16 +62,23 @@ export function NavBar({ darkMode, toggleDarkMode }) {
 								<SignInButton />
 							</abbr>
 						)}
-						<abbr
-							title={darkMode ? 'Switch to light mode' : 'Switch to dark mode'}
+						<Button
+							onClick={toggleDarkMode}
+							className="absolute w-16 bottom-16 right-16 p-2 rounded-full text-primary-pink hover:text-primary-pink hover:text-opacity-60 font-semibold"
 						>
-							<Button
-								onClick={toggleDarkMode}
-								className=" p-2 text-primary-pink hover:text-primary-pink hover:text-opacity-60 rounded-full font-semibold"
+							<abbr
+								title={
+									darkMode ? 'Switch to light mode' : 'Switch to dark mode'
+								}
 							>
-								{darkMode ? <Eclipse /> : <Sun />}
-							</Button>
-						</abbr>
+								<button
+									onClick={toggleDarkMode}
+									className="p-2 rounded-full text-primary-pink hover:text-primary-pink hover:text-opacity-60 font-semibold"
+								>
+									{darkMode ? <Eclipse /> : <Sun />}
+								</button>
+							</abbr>
+						</Button>
 					</div>
 				</nav>
 
@@ -103,16 +110,23 @@ export function NavBar({ darkMode, toggleDarkMode }) {
 								<SignInButton />
 							</abbr>
 						)}
-						<abbr
-							title={darkMode ? 'Switch to light mode' : 'Switch to dark mode'}
+						<Button
+							onClick={toggleDarkMode}
+							className=" p-2 text-primary-pink hover:text-primary-pink hover:text-opacity-60 rounded-full font-semibold"
 						>
-							<Button
-								onClick={toggleDarkMode}
-								className=" p-2 text-primary-pink hover:text-primary-pink hover:text-opacity-60 rounded-full font-semibold"
+							<abbr
+								title={
+									darkMode ? 'Switch to light mode' : 'Switch to dark mode'
+								}
 							>
-								{darkMode ? <Eclipse /> : <Sun />}
-							</Button>
-						</abbr>
+								<button
+									onClick={toggleDarkMode}
+									className="p-2 rounded-full text-primary-pink hover:text-primary-pink hover:text-opacity-60 font-semibold"
+								>
+									{darkMode ? <Eclipse /> : <Sun />}
+								</button>
+							</abbr>
+						</Button>
 					</div>
 				</nav>
 			</header>
