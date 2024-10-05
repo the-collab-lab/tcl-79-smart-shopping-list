@@ -22,11 +22,11 @@ export function Layout() {
 
 	return (
 		<>
-			<div className={`${darkMode && 'dark'}`}>
+			<div className={`${darkMode && 'dark'} min-h-screen`}>
 				<div className="Layout text-black dark:text-white bg-white dark:bg-black">
 					<NavBar darkMode={darkMode} toggleDarkMode={toggleDarkMode} />
 
-					<main className="Layout-main">
+					<main className="mx-auto px-8 md:px-8 lg:px-20 w-full max-w-screen-sm min-h-screen flex flex-col">
 						<Outlet />
 					</main>
 
