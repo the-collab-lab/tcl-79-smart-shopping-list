@@ -20,6 +20,8 @@ export function App() {
 		null,
 	);
 
+	const listName = listPath.split('/').pop();
+
 	/**
 	 * This custom hook holds info about the current signed in user.
 	 * Check ./api/useAuth.jsx for its implementation.
@@ -52,7 +54,9 @@ export function App() {
 					/>
 					<Route
 						path="/list"
-						element={<List data={data} listPath={listPath} />}
+						element={
+							<List data={data} listPath={listPath} listName={listName} />
+						}
 					/>
 					<Route
 						path="/manage-list"

@@ -15,7 +15,7 @@ import {
 import { Button } from '@/components/ui/button';
 import { SquarePlus } from 'lucide-react';
 
-export function List({ data, listPath }) {
+export function List({ data, listPath, listName }) {
 	const [search, setSearch] = useState('');
 	const [allData, setAllData] = useState([]);
 	const [displayData, setDisplayData] = useState([]);
@@ -46,8 +46,20 @@ export function List({ data, listPath }) {
 	};
 
 	return (
-		<div className="flex flex-col items-center gap-4">
-			<div className="flex gap-2">
+		<div className="flex flex-col space-y-10 justify-center items-center">
+			<div className="flex flex-row justify-center">
+				<div className="relative inline-block">
+					<h1 className="font-[montserrat] text-3xl font-bold text-gray">
+						<span className="relative inline-block">{listName}</span>
+					</h1>
+					<img
+						src="/img/underline.png"
+						alt="Description"
+						className="absolute bottom-[-12px] -right-3 w-14 h-3"
+					/>
+				</div>
+			</div>
+			<div className="flex flex-row justify-center items-center space-x-3 max-w-md w-full">
 				<SearchBar
 					setDisplayData={setDisplayData}
 					allData={allData}
@@ -56,7 +68,7 @@ export function List({ data, listPath }) {
 				/>
 				<Dialog open={isOpen} onOpenChange={handleAddModal}>
 					<DialogTrigger asChild>
-						<Button className="bg-transparen hover:bg-transparen">
+						<Button className="bg-transparen hover:bg-transparen p-0">
 							<SquarePlus className="h-7 w-7 text-pink dark:text-green transition-opacity hover:opacity-75" />
 						</Button>
 					</DialogTrigger>
@@ -76,7 +88,7 @@ export function List({ data, listPath }) {
 					</DialogContent>
 				</Dialog>
 			</div>
-			<ul className="w-full max-w-[500px]">
+			<ul className="flex flex-col justify-center space-y-4 w-full max-w-md">
 				{displayData.map((item) => (
 					<ListItem
 						key={item.id}
@@ -96,15 +108,22 @@ export function List({ data, listPath }) {
 					/>
 				))}
 			</ul>
+			{displayData.length === 0 && search.length > 0 && (
+				<div className="flex flex-col items-center">
+					<p>No items found. Try searching for a different item!</p>
+				</div>
+			)}
 			{data.length === 0 && (
-				<div className="flex flex-col gap-4">
-					<p>You currently have no shopping items. Click below to add items</p>
+				<div className="flex flex-col justify-center items-center gap-4 w-full mx-auto">
+					<p className="text-grey text-center">
+						Your list is empty. Start adding some items now!
+					</p>
 					<Button
-						className="bg-main-green text-white rounded-lg w-full"
+						className="bg-pink text-white rounded-xl w-full hover:bg-pink hover:bg-opacity-75 text-sm font-semibold max-w-[150px]"
 						id="addFirstItem"
 						onClick={() => setIsOpen((prev) => !prev)}
 					>
-						Start adding items!
+						Add Item
 					</Button>
 				</div>
 			)}
