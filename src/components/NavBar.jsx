@@ -15,7 +15,7 @@ export function NavBar({ darkMode, toggleDarkMode }) {
 
 	return (
 		<>
-			<header className="bg-white dark:bg-black  px-8 md:px-8 lg:px-20 pb-2 pt-[max(env(safe-area-inset-top),1rem)] text-center">
+			<header className="bg-white dark:bg-black px-8 md:px-8 lg:px-20 pb-2 pt-[max(env(safe-area-inset-top),1rem)] text-center">
 				{/* Desktop top nav */}
 				<nav className="hidden lg:flex items-center justify-between p-4">
 					<div className="w-full lg:w-auto text-center lg:text-left">
@@ -53,15 +53,17 @@ export function NavBar({ darkMode, toggleDarkMode }) {
 								List
 							</Button>
 						</NavLink>
-						{!!user ? (
-							<abbr title="Sign out">
-								<SignOutButton />
-							</abbr>
-						) : (
-							<abbr title="Sign in">
-								<SignInButton />
-							</abbr>
-						)}
+						<div className=" pt-2">
+							{!!user ? (
+								<abbr title="Sign out">
+									<SignOutButton />
+								</abbr>
+							) : (
+								<abbr title="Sign in">
+									<SignInButton />
+								</abbr>
+							)}
+						</div>
 						<Button
 							onClick={toggleDarkMode}
 							className="fixed w-16 bottom-16 right-16 p-2 rounded-full text-primary-pink hover:text-primary-pink hover:text-opacity-60 font-semibold"
@@ -71,7 +73,7 @@ export function NavBar({ darkMode, toggleDarkMode }) {
 									darkMode ? 'Switch to light mode' : 'Switch to dark mode'
 								}
 							>
-								<button className="p-2 rounded-full text-primary-pink hover:text-opacity-60">
+								<button className=" rounded-full text-primary-pink hover:text-opacity-60">
 									{darkMode ? <Eclipse /> : <Sun />}
 								</button>
 							</abbr>
@@ -115,7 +117,7 @@ export function NavBar({ darkMode, toggleDarkMode }) {
 									darkMode ? 'Switch to light mode' : 'Switch to dark mode'
 								}
 							>
-								<button className="p-2 rounded-full text-primary-pink hover:text-opacity-60">
+								<button className="px-2 rounded-full text-primary-pink hover:text-opacity-60">
 									{darkMode ? <Eclipse /> : <Sun />}
 								</button>
 							</abbr>
