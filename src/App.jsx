@@ -59,7 +59,9 @@ export function App() {
 						/>
 						<Route
 							path="/list"
-							element={<List data={data} listPath={listPath} listName={listName} />}
+							element={
+								<List data={data} listPath={listPath} listName={listName} />
+							}
 						/>
 						<Route
 							path="/manage-list"
@@ -68,6 +70,7 @@ export function App() {
 							}
 						/>
 					</Route>
+				</Route>
 				<Route element={<Login user={user} />} path="/login" />
 			</Routes>
 		</Router>
