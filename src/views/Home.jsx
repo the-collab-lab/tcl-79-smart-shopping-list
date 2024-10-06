@@ -14,9 +14,15 @@ export function Home({
 	return (
 		<div className="flex flex-col space-y-10 justify-center ">
 			<div className="flex flex-row justify-center">
-				<h1 className="font-[montserrat] font-bold text-[32px] underline decoration-solid decoration-4 decoration-[#2EBB4B]  ">
-					Your Lists
-				</h1>
+				<div className="relative inline-block">
+					<h1 className=" font-[montserrat] text-3xl font-bold text-gray-300">
+						<span className="relative inline-block">
+							Your
+							<span className="absolute bottom-[-6px] left-0 w-full h-[3px] bg-pink-500"></span>
+						</span>{' '}
+						Lists
+					</h1>
+				</div>
 			</div>
 			{isModalOpen && (
 				<ShareModal
@@ -28,7 +34,7 @@ export function Home({
 			)}
 			<CreateShoppingList user={user} setListPath={setListPath} />
 			<div className="flex flex-row justify-center">
-				<ul className="flex flex-col justify-center space-y-2">
+				<ul className="flex flex-col justify-center space-y-4 w-full max-w-xl">
 					{data?.map((item, index) => (
 						<SingleList
 							key={index}

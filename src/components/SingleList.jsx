@@ -21,7 +21,7 @@ export function SingleList({
 	};
 
 	return (
-		<li className="flex flex-row align-middle justify-between px-2 py-1 rounded-[5px] text-[1.2em] space-x-5 w-[16rem] bg-white text-black">
+		<li className="flex flex-row align-middle justify-between px-2 py-3 rounded-[5px] text-[1.2em] space-x-5 w-full bg-white text-black">
 			<button
 				className="capitalize justify-self-end text-sm hover:font-bold"
 				onClick={handleClick}
@@ -35,7 +35,7 @@ export function SingleList({
 				>
 					<FaShareNodes />
 				</button>
-				<button className="text-red-500  hover:text-red-600">
+				<button className="text-pink-500  hover:text-pink-600">
 					<RiDeleteBin5Fill />
 				</button>
 			</div>

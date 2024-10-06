@@ -29,7 +29,7 @@ export default function CreateShoppingList({ user, setListPath }) {
 					Create a new list
 				</label>
 				<input
-					className="border-[1px] rounded h-[3rem] hover:border-blue-700"
+					className="border-[1px] rounded-lg h-[3rem] focus-visible:outline-none focus:ring-1 focus:ring-green-500"
 					id="shoppingList"
 					type="text"
 					value={listName}
@@ -40,7 +40,7 @@ export default function CreateShoppingList({ user, setListPath }) {
 
 			<button
 				type="submit"
-				className="bg-[#FBB300] hover:bg-[#fbb400c9] text-black font-bold h-[3rem] p-3 rounded align-bottom"
+				className="bg-green-500 hover:bg-green-500 hover:bg-opacity-80 text-black font-bold h-[3rem] p-3 rounded-lg align-bottom"
 			>
 				Create +
 			</button>

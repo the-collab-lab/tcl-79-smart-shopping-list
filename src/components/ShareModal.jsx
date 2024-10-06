@@ -20,21 +20,23 @@ export default function ShareModal({
 	};
 
 	return (
-		<div className="size-full">
+		<div className="fixed inset-0 flex justify-center items-center z-10">
 			<div
-				className="size-full absolute top-0 bg-[rgba(49,49,49,0.8)]"
+				className="fixed inset-0 bg-[rgba(49,49,49,0.8)]"
 				onClick={handleShareModalClick}
 			></div>
 			<div>
 				<form
 					onSubmit={(event) => handleSubmit(event)}
-					className="absolute top-1/4 left-1/4 text-black bg-slate-50 z-10 rounded p-5 w-1/2 h-1/2 flex flex-col justify-between items-center"
+					className="relative text-black bg-slate-50 z-10 rounded p-10 w-full max-w-2xl  flex flex-col justify-between items-center space-y-6"
 				>
-					<h2 className="font-bold">You're sharing {name}</h2>
-					<div>
-						<label htmlFor="email">Invite a user by email: </label>
+					<h2 className="font-bold text-lg">You're sharing {name}</h2>
+					<div className="w-full">
+						<label htmlFor="email" className="block mb-2 text-sm">
+							Invite a user by email:
+						</label>
 						<input
-							className="bg-white border-[1px] border-gray-400 rounded-sm"
+							className="w-full bg-white border-[1px] border-gray-400 focus-visible:outline-none focus:ring-1 focus:ring-green-500 rounded-xl p-2"
 							type="text"
 							id="email"
 							required
@@ -42,16 +44,16 @@ export default function ShareModal({
 							onChange={(e) => setRecipientEmail(e.target.value)}
 						/>
 					</div>
-					<div className="flex flex-row justify-center space-x-3">
+					<div className="flex flex-row justify-center space-x-4 w-full">
 						<button
 							onClick={handleShareModalClick}
-							className="bg-white py-2 px-6 border rounded-[100px]"
+							className="bg-white  hover:bg-slate-100 hover:bg-opacity-80 py-62 px-8 border rounded-xl w-1/2"
 						>
 							Close
 						</button>
 						<button
 							type="submit"
-							className="bg-[#FBB300] py-2 px-6 border rounded-[100px]"
+							className="bg-pink-500  hover:bg-pink-500 hover:bg-opacity-80  py-3 px-8 rounded-xl w-1/2"
 						>
 							Invite
 						</button>
