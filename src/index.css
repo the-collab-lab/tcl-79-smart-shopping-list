@@ -2,9 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-* {
-	@apply transition-colors duration-50;
-}
 /* Styles for number input */
 input[type='number']::-webkit-inner-spin-button,
 input[type='number']::-webkit-outer-spin-button {
