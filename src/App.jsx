@@ -6,6 +6,10 @@ import { useAuth, useShoppingListData, useShoppingLists } from './api';
 
 import { useStateWithStorage } from './utils';
 
+import ProtectedRoutes from './utils/ProtectedRoutes';
+
+import Login from './views/Login';
+
 export function App() {
 	/**
 	 * This custom hook takes the path of a shopping list
@@ -45,24 +49,29 @@ export function App() {
 	return (
 		<Router>
 			<Routes>
-				<Route path="/" element={<Layout />}>
-					<Route
-						index
-						element={
-							<Home user={user} data={lists} setListPath={setListPath} />
-						}
-					/>
-					<Route
-						path="/list"
-						element={
-							<List data={data} listPath={listPath} listName={listName} />
-						}
-					/>
-					<Route
-						path="/manage-list"
-						element={<ManageList listPath={listPath} user={user} data={data} />}
-					/>
+				<Route element={<ProtectedRoutes user={user} />}>
+					<Route path="/" element={<Layout />}>
+						<Route
+							index
+							element={
+								<Home user={user} data={lists} setListPath={setListPath} />
+							}
+						/>
+						<Route
+							path="/list"
+							element={
+								<List data={data} listPath={listPath} listName={listName} />
+							}
+						/>
+						<Route
+							path="/manage-list"
+							element={
+								<ManageList listPath={listPath} user={user} data={data} />
+							}
+						/>
+					</Route>
 				</Route>
+				<Route element={<Login user={user} />} path="/login" />
 			</Routes>
 		</Router>
 	);
