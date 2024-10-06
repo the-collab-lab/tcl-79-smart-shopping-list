@@ -10,8 +10,8 @@ export function NavBar({ darkMode, toggleDarkMode }) {
 	const { user } = useAuth();
 	const linkClass = ({ isActive }) =>
 		isActive
-			? 'bg-primary-green text-white rounded-xl px-3 py-2 p-4'
-			: 'hover:opacity-70 dark:hover:opacity-60 rounded-xl px-3 py-2 p-4';
+			? 'bg-light-green dark:bg-primary-green dark:hover:bg-primary-green rounded-xl px-3 py-2 p-4'
+			: 'hover:opacity-70 dark:hover:text-white rounded-xl px-3 py-2 p-4';
 
 	return (
 		<>
