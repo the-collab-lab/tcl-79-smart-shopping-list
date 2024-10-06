@@ -23,6 +23,13 @@ export default {
 			transitionDuration: {
 				50: '50ms',
 				25: '25ms',
+
+				'main-green': '#2EBB4B',
+				'light-green': '#79D8AC',
+				pink: '#F55A99',
+				black: '#1F1E26',
+				grey: '#757575',
+				'light-grey': '#F3F3F3',
 			},
 		},
 	},
