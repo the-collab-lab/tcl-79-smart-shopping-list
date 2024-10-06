@@ -177,7 +177,10 @@ export async function shareList(listPath, currentUserId, recipientEmail) {
  * @param {string} itemData.itemName The name of the item.
  * @param {number} itemData.daysUntilNextPurchase The number of days until the user thinks they'll need to buy the item again.
  */
-export async function addItem(listPath, { itemName, daysUntilNextPurchase }) {
+export async function addItem(
+	listPath,
+	{ itemName, itemQuantity, daysUntilNextPurchase },
+) {
 	const listCollectionRef = collection(db, listPath, 'items');
 	return addDoc(listCollectionRef, {
 		dateCreated: new Date(),
@@ -187,6 +190,7 @@ export async function addItem(listPath, { itemName, daysUntilNextPurchase }) {
 		dateNextPurchased: getFutureDate(daysUntilNextPurchase),
 		dayInterval: daysUntilNextPurchase,
 		name: itemName,
+		quantity: itemQuantity,
 		totalPurchases: 0,
 		checked: false,
 	});
