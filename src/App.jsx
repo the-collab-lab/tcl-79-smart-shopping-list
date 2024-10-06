@@ -6,7 +6,6 @@ import { useState } from 'react';
 import ProtectedRoutes from './utils/ProtectedRoutes';
 import Login from './views/Login';
 
-
 export function App() {
 	const [isModalOpen, setIsModalOpen] = useState(false);
 	/**
@@ -58,25 +57,19 @@ export function App() {
 							index
 							element={
 								<Home
-								user={user}
-								data={lists}
-								listPath={listPath}
-								setListPath={setListPath}
-								isModalOpen={isModalOpen}
-								handleShareModalClick={handleShareModalClick}
-							/>
+									user={user}
+									data={lists}
+									listPath={listPath}
+									setListPath={setListPath}
+									isModalOpen={isModalOpen}
+									handleShareModalClick={handleShareModalClick}
+								/>
 							}
 						/>
 						<Route
 							path="/list"
 							element={
 								<List data={data} listPath={listPath} listName={listName} />
-							}
-						/>
-						<Route
-							path="/manage-list"
-							element={
-								<ManageList listPath={listPath} user={user} data={data} />
 							}
 						/>
 					</Route>
