@@ -126,7 +126,7 @@ export function NavBar({ darkMode, toggleDarkMode }) {
 				</nav>
 			</header>
 
-			<nav className="block lg:hidden fixed bottom-0 left-0 right-0 shadow-lg p-4 bg-white dark:bg-black">
+			<nav className="block z-10 lg:hidden fixed bottom-0 left-0 right-0 shadow-lg p-4 bg-white dark:bg-black">
 				<div className="flex justify-around items-center">
 					<NavLink to="/" className={linkClass}>
 						<Button className="text-black dark:text-white text-base">

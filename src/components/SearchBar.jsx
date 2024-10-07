@@ -14,8 +14,8 @@ export function SearchBar({ allData, setDisplayData, setSearch, search }) {
 	};
 
 	return (
-		<form className="relative w-full -top-[5px]">
-			<label htmlFor="shoppingList" className="text-xs font-light">
+		<form className="relative w-full -top-[3px]">
+			<label htmlFor="shoppingList" className="text-sm font-light">
 				Filter lists
 			</label>
 			<Input

@@ -66,7 +66,7 @@ export function ListItem({
 	}, []);
 
 	return (
-		<li className="flex flex-row items-center justify-between rounded-[5px] text-[1em] space-x-5 w-full bg-white text-black h-[3.3rem]">
+		<li className="flex  flex-row align-middle justify-between px-2  py-[8px] rounded-[5px] text-[1.2em] space-x-8 w-full bg-white dark:bg-dark-grey  text-black dark:text-gray-200 shadow-md shadow-slate-400 dark:shadow-gray-600 border border-gray-300 dark:border-gray-500">
 			<div className="flex items-center gap-3 ml-4">
 				<input
 					type="checkbox"
