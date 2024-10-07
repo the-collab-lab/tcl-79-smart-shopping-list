@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { createList } from '../api/firebase';
 import { useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
+import { Input } from './ui/input';
 
 export default function CreateShoppingList({ user, setListPath }) {
 	const [listName, setListName] = useState('');
@@ -23,13 +24,16 @@ export default function CreateShoppingList({ user, setListPath }) {
 	};
 
 	return (
-		<form onSubmit={handleSubmit} className="flex flex-row space-x-3 items-end">
-			<div className="flex flex-col">
-				<label htmlFor="shoppingList" className="text-xs font-extralight">
+		<form
+			onSubmit={handleSubmit}
+			className="relative w-full flex items-center justify-center gap-4 max-w-lg mx-auto "
+		>
+			<div className="flex flex-col w-full max-w-xs">
+				<label htmlFor="shoppingList" className="text-xs font-light">
 					Create a new list
 				</label>
-				<input
-					className="border-[1px] rounded-lg h-[3rem] focus-visible:outline-none focus:ring-1 focus:ring-green-500"
+				<Input
+					className="border-[1px] rounded-[5px] text-[1em] h-[3rem] pl-10 focus-visible:outline-none focus:ring-1 focus:ring-primary-green text-black dark:text-white bg-white dark:bg-bg-black"
 					id="shoppingList"
 					type="text"
 					value={listName}
@@ -37,13 +41,15 @@ export default function CreateShoppingList({ user, setListPath }) {
 					required
 				/>
 			</div>
-
-			<button
-				type="submit"
-				className="bg-green-500 hover:bg-green-500 hover:bg-opacity-80 text-black font-bold h-[3rem] p-3 rounded-lg align-bottom"
-			>
-				Create +
-			</button>
+			<div className="flex pt-4">
+				<button
+					type="submit"
+					className="bg-light-green hover:bg-light-green dark:bg-primary-green dark:hover:bg-primary-green hover:bg-opacity-75 dark:hover:bg-opacity-75 text-black font-bold h-[3rem] px-5 rounded-[5px] flex items-center space-x-2"
+				>
+					<span>Create</span>
+					<span>+</span>
+				</button>
+			</div>
 		</form>
 	);
 }

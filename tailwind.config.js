@@ -20,7 +20,7 @@ export default {
 				'light-pink': '#D7A2C3',
 				'ruby-pink': '#AC4270',
 				'bg-black': '#181818',
-				'dark-grey': '#7A7A7A',
+				'dark-grey': '#595959',
 				'light-grey': '#A3A3A3',
 				'text-grey': '#B5B5B5',
 				soon: '#FFB74D',

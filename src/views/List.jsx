@@ -15,7 +15,7 @@ import {
 import { Button } from '@/components/ui/button';
 import { SquarePlus } from 'lucide-react';
 
-export function List({ data, listPath, listName }) {
+export function List({ data, listPath, listName, darkMode }) {
 	const [search, setSearch] = useState('');
 	const [allData, setAllData] = useState([]);
 	const [displayData, setDisplayData] = useState([]);
@@ -49,14 +49,24 @@ export function List({ data, listPath, listName }) {
 		<div className="flex flex-col space-y-10 justify-center items-center">
 			<div className="flex flex-row justify-center">
 				<div className="relative inline-block">
-					<h1 className="font-[montserrat] text-3xl font-bold text-gray">
-						<span className="relative inline-block">{listName}</span>
+					<h1 className="font-[montserrat] text-3xl font-bold ">
+						<span className=" capitalize relative inline-block">
+							{listName}
+						</span>
 					</h1>
-					<img
-						src="/img/underline.png"
-						alt="Description"
-						className="absolute bottom-[-12px] -right-3 w-14 h-3"
-					/>
+					{darkMode ? (
+						<img
+							src="/img/light-pink-underline.png"
+							alt="Description"
+							className="absolute bottom-[-12px] -right-3 w-14 h-3"
+						/>
+					) : (
+						<img
+							src="/img/ruby-underline.png"
+							alt="Description"
+							className="absolute bottom-[-12px] -right-3 w-14 h-3"
+						/>
+					)}
 				</div>
 			</div>
 			<div className="flex flex-row justify-center items-center space-x-3 max-w-md w-full">
@@ -69,7 +79,10 @@ export function List({ data, listPath, listName }) {
 				<Dialog open={isOpen} onOpenChange={handleAddModal}>
 					<DialogTrigger asChild>
 						<Button className="bg-transparen hover:bg-transparen p-0">
-							<SquarePlus className="h-7 w-7 text-pink dark:text-green transition-opacity hover:opacity-75" />
+							<SquarePlus
+								aria-label="Add a new item"
+								className="h-7 w-7 text-primary-pink dark:text-primary-green transition-opacity hover:opacity-75"
+							/>
 						</Button>
 					</DialogTrigger>
 					<DialogContent>
@@ -119,6 +132,7 @@ export function List({ data, listPath, listName }) {
 						Your list is empty. Start adding some items now!
 					</p>
 					<Button
+						aria-label="Add item to list"
 						className="bg-pink text-white rounded-xl w-full hover:bg-pink hover:bg-opacity-75 text-sm font-semibold max-w-[150px]"
 						id="addFirstItem"
 						onClick={() => setIsOpen((prev) => !prev)}

@@ -14,18 +14,21 @@ export function SearchBar({ allData, setDisplayData, setSearch, search }) {
 	};
 
 	return (
-		<form className="relative w-full">
-			<span className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
-				<ListFilter className="h-5 w-5 text-grey" />
-			</span>
+		<form className="relative w-full -top-[5px]">
+			<label htmlFor="shoppingList" className="text-xs font-light">
+				Filter lists
+			</label>
 			<Input
 				type="text"
 				id="item-filter"
 				value={search}
 				placeholder="Search..."
 				onChange={handleInputChange}
-				className="border-[1px] rounded-[5px] text-[1em] h-[3rem] pl-10 focus-visible:outline-none focus:ring-1 focus:ring-green-500 text-black"
+				className="border-[1px] rounded-[5px] text-[1em] h-[3rem] pl-10 focus-visible:outline-none focus:ring-1 focus:ring-primary-green text-black dark:text-white bg-white dark:bg-bg-black"
 			/>
+			<span className="absolute inset-y-0 left-0  top-6 flex items-center pl-3 pointer-events-none">
+				<ListFilter className="h-5 w-5 text-grey" />
+			</span>
 		</form>
 	);
 }
