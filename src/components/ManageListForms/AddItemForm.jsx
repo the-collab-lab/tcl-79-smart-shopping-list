@@ -31,7 +31,8 @@ export default function AddItemForm({ listPath, data, handleOpenModal }) {
 		const formattedItemName = formData.itemName
 			.toLowerCase()
 			.replace(/^\s\s*/, '')
-			.replace(/\s\s*$/, '');
+			.replace(/\s\s*$/, '')
+			.replace(/[^a-zA-Z ]/g, '');
 
 		const match = data.find((item) => item.name === formattedItemName);
 
