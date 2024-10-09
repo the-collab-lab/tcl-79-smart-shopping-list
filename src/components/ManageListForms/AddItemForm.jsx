@@ -3,13 +3,7 @@ import { addItem } from '../../api/firebase';
 import toast from 'react-hot-toast';
 import { Button } from '../ui/button';
 import { Input } from '../ui/input';
-import {
-	Select,
-	SelectTrigger,
-	SelectContent,
-	SelectItem,
-	SelectValue,
-} from '../ui/select';
+import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 
 export default function AddItemForm({ listPath, data, handleOpenModal }) {
 	const [formData, setFormData] = useState({
@@ -60,7 +54,7 @@ export default function AddItemForm({ listPath, data, handleOpenModal }) {
 		setFormData((prevFormData) => ({ ...prevFormData, [name]: value }));
 	};
 
-	const handleSelectChange = (value) => {
+	const handleRadioChange = (value) => {
 		setFormData((prevFormData) => ({
 			...prevFormData,
 			daysUntilNextPurchase: value,
@@ -90,16 +84,40 @@ export default function AddItemForm({ listPath, data, handleOpenModal }) {
 				<label htmlFor="daysUntilNextPurchase" className="text-md font-medium">
 					How soon would you like to buy this again?
 				</label>
-				<Select onValueChange={handleSelectChange}>
-					<SelectTrigger>
-						<SelectValue placeholder="Select Time" />
-					</SelectTrigger>
-					<SelectContent>
-						<SelectItem value="7">Soon (7 days)</SelectItem>
-						<SelectItem value="14">Kind of soon (14 days)</SelectItem>
-						<SelectItem value="30">Not soon (30 days)</SelectItem>
-					</SelectContent>
-				</Select>
+				<RadioGroup
+					onValueChange={handleRadioChange}
+					className="flex my-2 items-center justify-center gap-4"
+					id="daysUntilNextPurchase"
+				>
+					<div className="flex flex-col items-center justify-center rounded-xl border border-light-pink gap-4 w-28 h-28 shadow-bottom-right transition-transform duration-200 ease-in-out transform active:scale-95">
+						<RadioGroupItem
+							value="7"
+							id="soon"
+							name="timeFrame"
+							className="border  border-soon text-soon"
+						/>
+						<label htmlFor="soon" className="font-semibold text-sm">
+							Soon
+						</label>
+					</div>
+					<div className="flex flex-col items-center justify-center rounded-xl border border-light-pink gap-4 w-28 h-28 shadow-bottom-right transition-transform duration-200 ease-in-out transform active:scale-95">
+						<RadioGroupItem
+							value="14"
+							id="kind-of-soon"
+							name="timeFrame"
+							className="border border-kind-of-soon text-kind-of-soon"
+						/>
+						<label htmlFor="kind-of-soon" className="font-semibold text-sm">
+							Kind of soon
+						</label>
+					</div>
+					<div className="flex flex-col items-center justify-center rounded-xl border border-light-pink gap-4 w-28 h-28 shadow-bottom-right transition-transform duration-200 ease-in-out transform active:scale-95">
+						<RadioGroupItem value="30" id="not-of-soon" name="timeFrame" />
+						<label htmlFor="not of soon" className="font-semibold text-sm">
+							Not soon
+						</label>
+					</div>
+				</RadioGroup>
 			</div>
 			<div className="flex flex-col items-start gap-2 w-full">
 				<label htmlFor="quantity" className="text-md font-medium">
@@ -121,7 +139,7 @@ export default function AddItemForm({ listPath, data, handleOpenModal }) {
 			<div className="flex w-full">
 				<Button
 					type="submit"
-					className="bg-pink text-white rounded-xl w-full hover:bg-pink hover:bg-opacity-75 text-sm"
+					className="bg-primary-pink text-white rounded-xl w-full hover:bg-primary-pink hover:bg-opacity-75 text-sm"
 				>
 					Add Item
 				</Button>

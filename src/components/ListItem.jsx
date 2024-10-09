@@ -102,7 +102,7 @@ export function ListItem({
 							id={id}
 							onClick={() => setIsAlertOpen(true)}
 						>
-							<Trash2 className="text-main-green w-6 h-6 md:w-7 md:h-7" />
+							<Trash2 className="text-primary-green w-6 h-6 md:w-7 md:h-7" />
 						</Button>
 					</AlertDialogTrigger>
 					<AlertDialogContent>
@@ -117,7 +117,10 @@ export function ListItem({
 							<AlertDialogCancel onClick={() => setIsAlertOpen(false)}>
 								Cancel
 							</AlertDialogCancel>
-							<AlertDialogAction onClick={handleDelete}>
+							<AlertDialogAction
+								onClick={handleDelete}
+								className="bg-primary-pink text-white"
+							>
 								Continue
 							</AlertDialogAction>
 						</AlertDialogFooter>
