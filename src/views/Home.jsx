@@ -9,29 +9,27 @@ export function Home({
 	setListPath,
 	isModalOpen,
 	handleShareModalClick,
-	darkMode,
 }) {
 	const [selectedItem, setSelectedItem] = useState('');
 	return (
-		<div className="flex flex-col space-y-10 justify-center ">
+		<div className="flex flex-col space-y-10 justify-center">
 			<div className="flex flex-row justify-center">
 				<div className="relative inline-block">
-					<h1 className=" font-[montserrat] text-3xl font-bold text-dark-grey dark:text-gray-300">
+					<h1 className=" font-[montserrat] text-3xl font-bold text-gray-600 dark:text-gray-300">
 						Your Lists
 					</h1>
-					{darkMode ? (
-						<img
-							src="/img/ruby-underline.png"
-							alt="Description"
-							className="absolute bottom-[-12px] -right-3 w-14 h-3"
-						/>
-					) : (
-						<img
-							src="/img/light-pink-underline.png"
-							alt="Description"
-							className="absolute bottom-[-12px] -right-3 w-14 h-3"
-						/>
-					)}
+					{/* Did the conditional rendering of the underline like this cause we still need to hoist the darkMode */}
+
+					<img
+						src="/img/ruby-underline.png"
+						alt="Description"
+						className="absolute bottom-[-12px] -right-3 w-14 h-3 dark:hidden"
+					/>
+					<img
+						src="/img/light-pink-underline.png"
+						alt="Description"
+						className="absolute bottom-[-12px] -right-3 w-14 h-3 hidden dark:block"
+					/>
 				</div>
 			</div>
 			{isModalOpen && (

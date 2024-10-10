@@ -94,7 +94,7 @@ export default function AddItemForm({ listPath, data, handleOpenModal }) {
 					<SelectTrigger>
 						<SelectValue placeholder="Select Time" />
 					</SelectTrigger>
-					<SelectContent>
+					<SelectContent className="bg-white">
 						<SelectItem value="7">Soon (7 days)</SelectItem>
 						<SelectItem value="14">Kind of soon (14 days)</SelectItem>
 						<SelectItem value="30">Not soon (30 days)</SelectItem>
@@ -121,7 +121,7 @@ export default function AddItemForm({ listPath, data, handleOpenModal }) {
 			<div className="flex w-full">
 				<Button
 					type="submit"
-					className="bg-pink text-white rounded-xl w-full hover:bg-pink hover:bg-opacity-75 text-sm"
+					className="bg-primary-pink text-black rounded-xl w-full hover:bg-primary-pink hover:bg-opacity-80 text-sm p-6"
 				>
 					Add Item
 				</Button>

@@ -48,7 +48,7 @@ export default function ShareModal({
 						<button
 							aria-label="Close share button"
 							onClick={handleShareModalClick}
-							className="bg-white  hover:bg-slate-100 hover:bg-opacity-80 py-62 px-8 border rounded-xl w-1/2"
+							className="bg-white  hover:bg-slate-100 hover:bg-opacity-80  px-8 border rounded-xl w-1/2"
 						>
 							Close
 						</button>

@@ -66,7 +66,7 @@ export function ListItem({
 	}, []);
 
 	return (
-		<li className="flex  flex-row align-middle justify-between px-2  py-[8px] rounded-[5px] text-[1.2em] space-x-8 w-full bg-white dark:bg-dark-grey  text-black dark:text-gray-200 shadow-md shadow-slate-400 dark:shadow-gray-600 border border-gray-300 dark:border-gray-500">
+		<li className="flex  flex-row align-middle justify-between px-2  py-[8px] rounded-[5px] text-[1.2em] space-x-8 w-full bg-white dark:bg-[#2f3031]   text-black dark:text-gray-200 shadow-md shadow-slate-400 dark:shadow-gray-600 border border-gray-300 dark:border-gray-500">
 			<div className="flex items-center gap-3 ml-4">
 				<input
 					type="checkbox"
@@ -81,18 +81,22 @@ export function ListItem({
 				>
 					<label
 						htmlFor={`${id}`}
-						className="capitalize justify-self-end text-lg"
+						className="capitalize justify-self-end text-lg hover:font-bold"
 					>
 						{name}
 					</label>
 				</div>
-				<div className="bg-pink w-6 h-6 flex items-center justify-center rounded-full">
-					<span className="font-bold text-xs">{quantity}</span>
-				</div>
+				{quantity && (
+					<div className="bg-primary-pink text-black w-6 h-6 flex items-center justify-center rounded-full">
+						<span className="font-bold text-xs">{quantity}</span>
+					</div>
+				)}
 			</div>
 			<div className="flex items-center gap-2">
 				<div className={`${getIndicatorColor(indicator)} rounded-[5px] px-3`}>
-					<p className="capitalize justify-self-end text-base">{indicator}</p>
+					<p className="capitalize justify-self-end text-sm text-black dark:text-gray-800">
+						{indicator}
+					</p>
 				</div>
 				<AlertDialog open={isAlertOpen} onOpenChange={setIsAlertOpen}>
 					<AlertDialogTrigger asChild>
@@ -102,22 +106,30 @@ export function ListItem({
 							id={id}
 							onClick={() => setIsAlertOpen(true)}
 						>
-							<Trash2 className="text-main-green w-6 h-6 md:w-7 md:h-7" />
+							<Trash2 className="text-ruby-pink hover:text-opacity-75 dark:text-emerald-500 dark:hover:text-opacity-80 transform hover:scale-125 transition-transform duration-150 w-6 h-6 md:w-7 md:h-7" />
 						</Button>
 					</AlertDialogTrigger>
-					<AlertDialogContent>
+					<AlertDialogContent className="p-10">
 						<AlertDialogHeader>
-							<AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
-							<AlertDialogDescription>
+							<AlertDialogTitle className="text-lg text-slate-500 dark:text-slate-400">
+								Are you absolutely sure?
+							</AlertDialogTitle>
+							<AlertDialogDescription className="text-black">
 								This action cannot be undone. Do you really want to delete{' '}
 								{name}?
 							</AlertDialogDescription>
 						</AlertDialogHeader>
 						<AlertDialogFooter>
-							<AlertDialogCancel onClick={() => setIsAlertOpen(false)}>
+							<AlertDialogCancel
+								className="bg-white hover:bg-slate-100 px-8 border rounded-xl"
+								onClick={() => setIsAlertOpen(false)}
+							>
 								Cancel
 							</AlertDialogCancel>
-							<AlertDialogAction onClick={handleDelete}>
+							<AlertDialogAction
+								className="bg-primary-pink hover:bg-opacity-75 rounded-xl"
+								onClick={handleDelete}
+							>
 								Continue
 							</AlertDialogAction>
 						</AlertDialogFooter>
