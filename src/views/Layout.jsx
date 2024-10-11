@@ -1,9 +1,10 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import { useState } from 'react';
+import { useContext } from 'react';
 import { Outlet } from 'react-router-dom';
-import './Layout.css';
 import { Toaster } from 'react-hot-toast';
 import { NavBar } from '@/components/NavBar';
+import { Context } from '../Context';
+import './Layout.css';
 
 /**
  * TODO: The links defined in this file don't work!
@@ -14,7 +15,7 @@ import { NavBar } from '@/components/NavBar';
  */
 
 export function Layout() {
-	const [darkMode, setDarkMode] = useState(false);
+	const { darkMode, setDarkMode } = useContext(Context);
 
 	const toggleDarkMode = () => {
 		setDarkMode(!darkMode);
@@ -26,7 +27,8 @@ export function Layout() {
 				<div className="Layout text-black dark:text-white bg-white dark:bg-black">
 					<NavBar darkMode={darkMode} toggleDarkMode={toggleDarkMode} />
 
-					<main className="mx-auto px-8 md:px-8 lg:px-20 w-full max-w-screen-sm min-h-screen flex flex-col">
+					<main className="mx-auto px-8 md:px-8 lg:px-20 w-full max-w-screen-sm min-h-screen flex flex-col rounded-xl pt-20">
+						{/* I have add rounded and padding classes here for the background container that we could add to break up the design from being too white */}
 						<Outlet />
 					</main>
 
