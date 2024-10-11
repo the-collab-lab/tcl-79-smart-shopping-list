@@ -11,6 +11,7 @@ export function Home({
 	handleShareModalClick,
 }) {
 	const [selectedItem, setSelectedItem] = useState('');
+
 	return (
 		<div className="flex flex-col space-y-10 justify-center ">
 			<div className="flex flex-row justify-center">
@@ -40,6 +41,7 @@ export function Home({
 							key={index}
 							name={item.name}
 							path={item.path}
+							listPath={listPath}
 							setListPath={setListPath}
 							handleShareModalClick={handleShareModalClick}
 							setSelectedItem={setSelectedItem}

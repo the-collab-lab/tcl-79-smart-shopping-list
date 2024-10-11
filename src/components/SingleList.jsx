@@ -1,13 +1,26 @@
+import { deleteList } from '@/api';
+import { getAuth } from 'firebase/auth';
+import { useEffect, useState } from 'react';
 import { FaShareNodes } from 'react-icons/fa6';
 import { RiDeleteBin5Fill } from 'react-icons/ri';
 import { useNavigate } from 'react-router-dom';
+import toast from 'react-hot-toast';
 export function SingleList({
 	name,
 	path,
+	listPath,
 	setListPath,
 	handleShareModalClick,
 	setSelectedItem,
 }) {
+	const [collectionId, setCollectionId] = useState('');
+	const singleListPath = path.split('/')[0];
+	const email = getAuth().currentUser.email;
+
+	useEffect(() => {
+		setCollectionId(singleListPath);
+	}, []);
+
 	const navigate = useNavigate();
 
 	function handleClick() {
@@ -18,6 +31,18 @@ export function SingleList({
 	const handleShareClick = () => {
 		setSelectedItem(name);
 		handleShareModalClick();
+	};
+
+	const handleDeleteClick = async (name) => {
+		await deleteList(collectionId, name, email);
+		console.log(listPath, name);
+
+		if (listPath.includes(name)) {
+			console.log();
+
+			setListPath('');
+		}
+		toast.success(`List ${name} was deleted`);
 	};
 
 	return (
@@ -35,9 +60,18 @@ export function SingleList({
 				>
 					<FaShareNodes />
 				</button>
-				<button className="text-pink-500  hover:text-pink-600">
-					<RiDeleteBin5Fill />
-				</button>
+				{getAuth().currentUser.uid === singleListPath ? (
+					<button
+						onClick={() => handleDeleteClick(name)}
+						className="text-pink-500  hover:text-pink-600"
+					>
+						<RiDeleteBin5Fill />
+					</button>
+				) : (
+					<div className="text-gray-500">
+						<RiDeleteBin5Fill />
+					</div>
+				)}
 			</div>
 		</li>
 	);
