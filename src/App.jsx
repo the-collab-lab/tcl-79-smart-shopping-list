@@ -48,8 +48,6 @@ export function App() {
 		setIsModalOpen(!isModalOpen);
 	};
 
-	const [darkMode, setDarkMode] = useState(false);
-
 	return (
 		<Router>
 			<Routes>
