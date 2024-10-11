@@ -39,7 +39,7 @@ const DialogContent = React.forwardRef(
 			>
 				{children}
 				<DialogPrimitive.Close className="absolute right-4 top-4 rounded-sm opacity-70 ring-offset-white transition-opacity hover:opacity-100 focus:outline-none focus:ring-0 focus:ring-slate-950 focus:ring-offset-2 disabled:pointer-events-none data-[state=open]:bg-slate-100 data-[state=open]:text-slate-500 dark:ring-offset-slate-950 dark:focus:ring-slate-300 dark:data-[state=open]:bg-slate-800 dark:data-[state=open]:text-slate-400">
-					<X className="h-7 w-7 text-grey" />
+					<X className="h-7 w-7 text-light-grey" />
 				</DialogPrimitive.Close>
 			</DialogPrimitive.Content>
 		</DialogPortal>
