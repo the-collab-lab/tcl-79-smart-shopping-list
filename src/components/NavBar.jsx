@@ -94,15 +94,6 @@ export function NavBar({ darkMode, toggleDarkMode }) {
 							)}
 						</NavLink>
 						<div className="flex items-center space-x-2">
-							{!!user ? (
-								<abbr title="Sign out">
-									<SignOutButton />
-								</abbr>
-							) : (
-								<abbr title="Sign in">
-									<SignInButton />
-								</abbr>
-							)}
 							<Button
 								onClick={toggleDarkMode}
 								className="p-2 text-primary-pink hover:text-opacity-60 rounded-full font-semibold"
@@ -117,6 +108,15 @@ export function NavBar({ darkMode, toggleDarkMode }) {
 									</button>
 								</abbr>
 							</Button>
+							{!!user ? (
+								<abbr title="Sign out">
+									<SignOutButton />
+								</abbr>
+							) : (
+								<abbr title="Sign in">
+									<SignInButton />
+								</abbr>
+							)}
 						</div>
 					</nav>
 				</header>
