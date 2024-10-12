@@ -1,13 +1,46 @@
+import { deleteList } from '@/api';
+import { getAuth } from 'firebase/auth';
+import { useEffect, useState } from 'react';
 import { FaShareNodes } from 'react-icons/fa6';
-import { Trash2 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
+import toast from 'react-hot-toast';
+import {
+	AlertDialog,
+	AlertDialogAction,
+	AlertDialogCancel,
+	AlertDialogContent,
+	AlertDialogDescription,
+	AlertDialogFooter,
+	AlertDialogHeader,
+	AlertDialogTitle,
+	AlertDialogTrigger,
+} from './ui/alert-dialog';
+import { Button } from './ui/button';
+import { Trash2 } from 'lucide-react';
+import {
+	Tooltip,
+	TooltipContent,
+	TooltipProvider,
+	TooltipTrigger,
+} from '@/components/ui/tooltip';
+
 export function SingleList({
 	name,
 	path,
+	listPath,
 	setListPath,
 	handleShareModalClick,
 	setSelectedItem,
 }) {
+	const [isAlertOpen, setIsAlertOpen] = useState(false);
+	const [collectionId, setCollectionId] = useState('');
+	const singleListPath = path.split('/')[0];
+	const email = getAuth().currentUser.email;
+
+	useEffect(() => {
+		setCollectionId(singleListPath);
+	}, []);
+
 	const navigate = useNavigate();
 
 	function handleClick() {
@@ -18,6 +51,19 @@ export function SingleList({
 	const handleShareClick = () => {
 		setSelectedItem(name);
 		handleShareModalClick();
+	};
+
+	const handleDeleteClick = async (name) => {
+		await deleteList(collectionId, name, email);
+		console.log(listPath, name);
+
+		if (listPath.includes(name)) {
+			console.log();
+
+			setListPath('');
+		}
+		toast.success(`List ${name} was deleted`);
+		setIsAlertOpen(false);
 	};
 
 	return (
@@ -36,12 +82,61 @@ export function SingleList({
 				>
 					<FaShareNodes className="w-5 h-5 sm:w-6 sm:h-6" />
 				</button>
-				<button
-					aria-label="Delete list"
-					className="text-ruby-pink hover:text-ruby-pink hover:text-opacity-80 dark:text-emerald-500 dark:hover:text-emerald-300 dark:hover:text-opacity-80 transform hover:scale-110 transition-transform duration-150 sm:hover:scale-125"
-				>
-					<Trash2 className="w-5 h-5 sm:w-6 sm:h-6 md:w-7 md:h-7" />
-				</button>
+				{getAuth().currentUser.uid === singleListPath ? (
+					<AlertDialog open={isAlertOpen} onOpenChange={setIsAlertOpen}>
+						<AlertDialogTrigger asChild>
+							<Button
+								className="bg-transparent hover:bg-transparent"
+								type="button"
+								onClick={() => setIsAlertOpen(true)}
+							>
+								<Trash2 className="text-pink-500  hover:text-pink-600" />
+							</Button>
+						</AlertDialogTrigger>
+						<AlertDialogContent>
+							<AlertDialogHeader>
+								<AlertDialogTitle className="text-sm text-slate-800 dark:text-slate-400 sm:text-lg">
+									Are you absolutely sure?
+								</AlertDialogTitle>
+								<AlertDialogDescription className="text-slate-700">
+									This will permanently delete your list. Do you really want to
+									delete {name}?
+								</AlertDialogDescription>
+							</AlertDialogHeader>
+							<AlertDialogFooter>
+								<AlertDialogCancel
+									className="bg-white text-slate-700 hover:bg-slate-100 px-6 border rounded-lg sm:px-8 sm:rounded-xl"
+									onClick={() => setIsAlertOpen(false)}
+								>
+									Cancel
+								</AlertDialogCancel>
+								<AlertDialogAction
+									className="bg-primary-pink text-white hover:bg-opacity-90 px-6 border rounded-lg sm:px-8 sm:rounded-xl"
+									onClick={() => handleDeleteClick(name)}
+								>
+									Continue
+								</AlertDialogAction>
+							</AlertDialogFooter>
+						</AlertDialogContent>
+					</AlertDialog>
+				) : (
+					<TooltipProvider>
+						<Tooltip delayDuration={100}>
+							<TooltipTrigger asChild>
+								<Button
+									className="bg-transparent hover:bg-transparent"
+									type="button"
+									onClick={() => setIsAlertOpen(true)}
+								>
+									<Trash2 className="text-gray-500" />
+								</Button>
+							</TooltipTrigger>
+							<TooltipContent>
+								<p>You cannot delete a list you don&#39;t own!</p>
+							</TooltipContent>
+						</Tooltip>
+					</TooltipProvider>
+				)}
 			</div>
 		</li>
 	);
