@@ -16,3 +16,7 @@ input[type='number'] {
 #root {
 	background-color: #201c24;
 }
+
+.shadow-bottom-right {
+	box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.3);
+}
