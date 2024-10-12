@@ -108,7 +108,7 @@ export function ListItem({
 							id={id}
 							onClick={() => setIsAlertOpen(true)}
 						>
-							<Trash2 className="w-5 h-5 text-ruby-pink hover:text-opacity-75 dark:text-emerald-500 dark:hover:text-opacity-80 sm:w-6 sm:h-6 md:w-7 md:h-7" />
+							<Trash2 className="w-5 h-5 text-ruby-pink hover:text-opacity-75 dark:text-emerald-500 dark:hover:text-opacity-80 sm:w-6 sm:h-6 md:w-7 md:h-7 transform hover:scale-110 transition-transform duration-150 sm:hover:scale-125" />
 						</Button>
 					</AlertDialogTrigger>
 					<AlertDialogContent className="p-6 sm:p-10">
@@ -132,7 +132,7 @@ export function ListItem({
 								className="bg-primary-pink hover:bg-opacity-75 rounded-lg sm:rounded-xl"
 								onClick={handleDelete}
 							>
-								Continue
+								Delete
 							</AlertDialogAction>
 						</AlertDialogFooter>
 					</AlertDialogContent>
