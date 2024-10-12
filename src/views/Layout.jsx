@@ -26,7 +26,8 @@ export function Layout() {
 				<div className="Layout text-black dark:text-white bg-white dark:bg-black">
 					<NavBar darkMode={darkMode} toggleDarkMode={toggleDarkMode} />
 
-					<main className="mx-auto px-8 md:px-8 lg:px-20 w-full max-w-screen-sm min-h-screen flex flex-col">
+					<main className="mx-auto px-8 md:px-8 lg:px-20 w-full max-w-screen-sm min-h-screen flex flex-col rounded-xl pt-20 pb-[100px]">
+						{/* I have add rounded and padding classes here for the background container that we could add to break up the design from being too white */}
 						<Outlet />
 					</main>
 

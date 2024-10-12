@@ -12,16 +12,24 @@ export function Home({
 }) {
 	const [selectedItem, setSelectedItem] = useState('');
 	return (
-		<div className="flex flex-col space-y-10 justify-center ">
+		<div className="flex flex-col space-y-10 justify-center">
 			<div className="flex flex-row justify-center">
 				<div className="relative inline-block">
-					<h1 className=" font-[montserrat] text-3xl font-bold text-gray-300">
-						<span className="relative inline-block">
-							Your
-							<span className="absolute bottom-[-6px] left-0 w-full h-[3px] bg-pink-500"></span>
-						</span>{' '}
-						Lists
+					<h1 className=" font-[montserrat] text-3xl font-bold text-gray-600 dark:text-gray-300">
+						Your Lists
 					</h1>
+					{/* Did the conditional rendering of the underline like this cause we still need to hoist the darkMode */}
+
+					<img
+						src="/img/ruby-underline.png"
+						alt="Description"
+						className="absolute bottom-[-12px] -right-3 w-14 h-3 dark:hidden"
+					/>
+					<img
+						src="/img/light-pink-underline.png"
+						alt="Description"
+						className="absolute bottom-[-12px] -right-3 w-14 h-3 hidden dark:block"
+					/>
 				</div>
 			</div>
 			{isModalOpen && (
@@ -34,7 +42,8 @@ export function Home({
 			)}
 			<CreateShoppingList user={user} setListPath={setListPath} />
 			<div className="flex flex-row justify-center">
-				<ul className="flex flex-col justify-center space-y-4 w-full max-w-xl">
+				<ul className="flex flex-col justify-center space-y-4 w-full max-w-md">
+					{' '}
 					{data?.map((item, index) => (
 						<SingleList
 							key={index}
