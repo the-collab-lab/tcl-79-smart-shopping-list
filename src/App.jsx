@@ -21,7 +21,7 @@ export function App() {
 		null,
 	);
 
-	const listName = listPath.split('/').pop();
+	const listName = listPath ? listPath.split('/').pop() : null;
 
 	/**
 	 * This custom hook holds info about the current signed in user.

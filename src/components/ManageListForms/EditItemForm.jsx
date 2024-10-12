@@ -26,7 +26,7 @@ export default function EditItemForm({
 			itemQuantity: quantity,
 			daysUntilNextPurchase: dateNextPurchased,
 		});
-	}, [name]);
+	}, []);
 
 	const handleSubmit = async (event) => {
 		event.preventDefault();
@@ -45,31 +45,32 @@ export default function EditItemForm({
 			resetItemName();
 			return;
 		}
-
+		// check if any of the values have been edited
 		const hasChanged =
 			formattedItemName !== name ||
 			formQuantity !== quantity ||
 			newDateNextPurchased !== dateNextPurchased;
+
+		// if no changes were made exit early
 		if (!hasChanged) {
 			toast.error('No changes were made.');
 			handleOpenModal();
 			return;
 		}
 
-		try {
-			let updatedData = {
-				itemName: formattedItemName,
-				itemQuantity: formQuantity,
-			};
+		let updatedData = {
+			itemName: formattedItemName,
+			itemQuantity: formQuantity,
+		};
+		// check if dateNextPurchased have been edited to use getFutureDate if not use the same date
+		if (newDateNextPurchased !== dateNextPurchased) {
+			const futureDate = parseInt(newDateNextPurchased);
+			updatedData.dateNextPurchased = getFutureDate(futureDate);
+		} else {
+			updatedData.dateNextPurchased = dateNextPurchased;
+		}
 
-			if (newDateNextPurchased !== dateNextPurchased) {
-				const futureDate = parseInt(newDateNextPurchased);
-				const formattedFutureDate = getFutureDate(futureDate);
-				updatedData.dateNextPurchased = formattedFutureDate;
-			} else {
-				updatedData.dateNextPurchased = dateNextPurchased;
-			}
-			console.log();
+		try {
 			handleOpenModal();
 			await editItem(listPath, id, updatedData);
 			toast.success(`${formattedItemName} has been updated!`);
@@ -118,18 +119,18 @@ export default function EditItemForm({
 					className="flex my-2 items-center justify-center gap-4"
 					id="daysUntilNextPurchase"
 				>
-					<div className="flex flex-col items-center justify-center rounded-xl border border-light-pink gap-4 w-28 h-28 shadow-bottom-right transition-transform duration-200 ease-in-out transform active:scale-95">
+					<div className="flex flex-col items-center justify-center rounded-xl border border-light-pink gap-4 w-24 h-24 sm:w-28 sm:h-28 shadow-bottom-right transition-transform duration-200 ease-in-out transform active:scale-95">
 						<RadioGroupItem
 							value="7"
 							id="soon"
 							name="timeFrame"
-							className="border  border-soon text-soon"
+							className="border border-soon text-soon"
 						/>
 						<label htmlFor="soon" className="font-semibold text-sm">
 							Soon
 						</label>
 					</div>
-					<div className="flex flex-col items-center justify-center rounded-xl border border-light-pink gap-4 w-28 h-28 shadow-bottom-right transition-transform duration-200 ease-in-out transform active:scale-95">
+					<div className="flex flex-col items-center justify-center rounded-xl border border-light-pink gap-4 w-24 h-24 sm:w-28 sm:h-28 shadow-bottom-right transition-transform duration-200 ease-in-out transform active:scale-95">
 						<RadioGroupItem
 							value="14"
 							id="kind-of-soon"
@@ -140,7 +141,7 @@ export default function EditItemForm({
 							Kind of soon
 						</label>
 					</div>
-					<div className="flex flex-col items-center justify-center rounded-xl border border-light-pink gap-4 w-28 h-28 shadow-bottom-right transition-transform duration-200 ease-in-out transform active:scale-95">
+					<div className="flex flex-col items-center justify-center rounded-xl border border-light-pink gap-4 w-24 h-24 sm:w-28 sm:h-28 shadow-bottom-right transition-transform duration-200 ease-in-out transform active:scale-95">
 						<RadioGroupItem value="30" id="not-of-soon" name="timeFrame" />
 						<label htmlFor="not of soon" className="font-semibold text-sm">
 							Not soon
@@ -170,7 +171,7 @@ export default function EditItemForm({
 					type="submit"
 					className="bg-primary-pink text-white rounded-xl w-full hover:bg-primary-pink hover:bg-opacity-75 text-sm"
 				>
-					Edit Item
+					Apply Changes
 				</Button>
 			</div>
 		</form>
