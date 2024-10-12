@@ -94,23 +94,23 @@ export function SingleList({
 						</AlertDialogTrigger>
 						<AlertDialogContent>
 							<AlertDialogHeader>
-								<AlertDialogTitle className="text-pink-500">
+								<AlertDialogTitle className="text-sm text-slate-800 dark:text-slate-400 sm:text-lg">
 									Are you absolutely sure?
 								</AlertDialogTitle>
-								<AlertDialogDescription>
+								<AlertDialogDescription className="text-slate-700">
 									This will permanently delete your list. Do you really want to
 									delete {name}?
 								</AlertDialogDescription>
 							</AlertDialogHeader>
 							<AlertDialogFooter>
 								<AlertDialogCancel
-									className="p-5 bg-red-600 rounded text-white hover:bg-red-800"
+									className="bg-white text-slate-700 hover:bg-slate-100 px-6 border rounded-lg sm:px-8 sm:rounded-xl"
 									onClick={() => setIsAlertOpen(false)}
 								>
 									Cancel
 								</AlertDialogCancel>
 								<AlertDialogAction
-									className="p-5 bg-green-600 rounded text-white hover:bg-green-800"
+									className="bg-primary-pink text-white hover:bg-opacity-90 px-6 border rounded-lg sm:px-8 sm:rounded-xl"
 									onClick={() => handleDeleteClick(name)}
 								>
 									Continue
