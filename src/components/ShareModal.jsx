@@ -46,12 +46,14 @@ export default function ShareModal({
 					</div>
 					<div className="flex flex-row justify-center space-x-4 w-full">
 						<button
+							aria-label="Close share button"
 							onClick={handleShareModalClick}
-							className="bg-white  hover:bg-slate-100 hover:bg-opacity-80 py-62 px-8 border rounded-xl w-1/2"
+							className="bg-white  hover:bg-slate-100 hover:bg-opacity-80  px-8 border rounded-xl w-1/2"
 						>
 							Close
 						</button>
 						<button
+							aria-label="Invite user to list"
 							type="submit"
 							className="bg-pink-500  hover:bg-pink-500 hover:bg-opacity-80  py-3 px-8 rounded-xl w-1/2"
 						>
