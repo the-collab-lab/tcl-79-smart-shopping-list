@@ -49,13 +49,21 @@ export function List({ data, listPath, listName }) {
 		<div className="flex flex-col space-y-10 justify-center items-center">
 			<div className="flex flex-row justify-center">
 				<div className="relative inline-block">
-					<h1 className="font-[montserrat] text-3xl font-bold text-gray">
-						<span className="relative inline-block">{listName}</span>
+					<h1 className="font-[montserrat] text-3xl font-bold text-slate-600 dark:text-gray-300">
+						<span className=" capitalize relative inline-block">
+							{listName}
+						</span>
 					</h1>
+					{/* Did the conditional rendering of the underline like this cause we still need to hoist the darkMode */}
 					<img
-						src="/img/underline.png"
+						src="/img/ruby-underline.png"
 						alt="Description"
-						className="absolute bottom-[-12px] -right-3 w-14 h-3"
+						className="absolute bottom-[-12px] -right-3 w-14 h-3 dark:hidden"
+					/>
+					<img
+						src="/img/light-pink-underline.png"
+						alt="Description"
+						className="absolute bottom-[-12px] -right-3 w-14 h-3 hidden dark:block"
 					/>
 				</div>
 			</div>
@@ -68,8 +76,11 @@ export function List({ data, listPath, listName }) {
 				/>
 				<Dialog open={isOpen} onOpenChange={handleAddModal}>
 					<DialogTrigger asChild>
-						<Button className="bg-transparen hover:bg-transparen p-0">
-							<SquarePlus className="h-7 w-7 text-pink dark:text-green transition-opacity hover:opacity-75" />
+						<Button className="bg-transparent hover:bg-transparent p-0">
+							<SquarePlus
+								aria-label="Add a new item"
+								className="h-7 w-7 text-primary-green dark:text-primary-pink  transition-opacity hover:opacity-75"
+							/>
 						</Button>
 					</DialogTrigger>
 					<DialogContent>
@@ -119,7 +130,8 @@ export function List({ data, listPath, listName }) {
 						Your list is empty. Start adding some items now!
 					</p>
 					<Button
-						className="bg-pink text-white rounded-xl w-full hover:bg-pink hover:bg-opacity-75 text-sm font-semibold max-w-[150px]"
+						aria-label="Add item to list"
+						className="bg-primary-pink dark:bg-primary-green text-black rounded-xl w-full hover:bg-primary-pink dark:hover:bg-primary-green hover:bg-opacity-75 dark:hover:bg-opacity-85 text-sm font-semibold max-w-[150px] p-6"
 						id="addFirstItem"
 						onClick={() => setIsOpen((prev) => !prev)}
 					>

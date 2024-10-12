@@ -79,33 +79,39 @@ export function ListItem({
 	}, []);
 
 	return (
-		<li className="flex flex-row items-center justify-between rounded-[5px] text-[1em] space-x-5 w-full bg-white text-black h-[3.3rem]">
-			<div className="flex items-center gap-3 ml-4">
+		<li className="flex flex-row align-middle justify-between px-2 py-[4px] rounded-[3px] text-[0.9em] space-x-4 w-full bg-white dark:bg-[#2f3031] text-black dark:text-gray-200 shadow-md shadow-slate-400 dark:shadow-gray-600 border border-gray-300 dark:border-gray-500 sm:py-[8px] sm:rounded-[5px] sm:text-[1.2em] sm:space-x-8">
+			<div className="flex items-center gap-2 ml-2 sm:gap-3 sm:ml-4">
 				<input
 					type="checkbox"
 					id={id}
 					onChange={handleOnChange}
 					checked={isChecked}
 					disabled={isChecked}
-					className="w-5 h-5 cursor-pointer"
+					className="w-4 h-4 cursor-pointer sm:w-5 sm:h-5"
 				/>
 				<div
-					className={`flex items-center gap-2 ${isChecked ? 'line-through' : ''}`}
+					className={`flex items-center gap-1 ${isChecked ? 'line-through' : ''} sm:gap-2`}
 				>
 					<label
 						htmlFor={`${id}`}
-						className="capitalize justify-self-end text-lg"
+						className="capitalize text-sm hover:font-bold sm:text-lg"
 					>
 						{name}
 					</label>
 				</div>
-				<div className="bg-pink w-6 h-6 flex items-center justify-center rounded-full">
-					<span className="font-bold text-xs">{quantity}</span>
-				</div>
+				{quantity && (
+					<div className="bg-primary-pink text-black w-5 h-5 flex items-center justify-center rounded-full sm:w-6 sm:h-6">
+						<span className="font-bold text-xs">{quantity}</span>
+					</div>
+				)}
 			</div>
-			<div className="flex items-center gap-2">
-				<div className={`${getIndicatorColor(indicator)} rounded-[5px] px-3`}>
-					<p className="capitalize justify-self-end text-base">{indicator}</p>
+			<div className="flex items-center gap-1 sm:gap-2">
+				<div
+					className={`${getIndicatorColor(indicator)} rounded-[3px] px-2 sm:rounded-[5px] sm:px-3`}
+				>
+					<p className="capitalize text-xs sm:text-sm text-black dark:text-gray-800">
+						{indicator}
+					</p>
 				</div>
 				<div className="flex items-center p-2">
 					<AlertDialog open={isAlertOpen} onOpenChange={setIsAlertOpen}>
@@ -116,26 +122,31 @@ export function ListItem({
 								id={id}
 								onClick={() => setIsAlertOpen(true)}
 							>
-								<Trash2 className="text-primary-green w-6 h-6 md:w-7 md:h-7" />
+								<Trash2 className="w-5 h-5 text-ruby-pink hover:text-opacity-75 dark:text-emerald-500 dark:hover:text-opacity-80 sm:w-6 sm:h-6 md:w-7 md:h-7" />
 							</Button>
 						</AlertDialogTrigger>
-						<AlertDialogContent>
+						<AlertDialogContent className="p-6 sm:p-10">
 							<AlertDialogHeader>
-								<AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
-								<AlertDialogDescription>
+								<AlertDialogTitle className="text-sm text-slate-500 dark:text-slate-400 sm:text-lg">
+									Are you absolutely sure?
+								</AlertDialogTitle>
+								<AlertDialogDescription className="text-black">
 									This action cannot be undone. Do you really want to delete{' '}
 									{name}?
 								</AlertDialogDescription>
 							</AlertDialogHeader>
 							<AlertDialogFooter>
-								<AlertDialogCancel onClick={() => setIsAlertOpen(false)}>
+								<AlertDialogCancel
+									className="bg-white hover:bg-slate-100 px-6 border rounded-lg sm:px-8 sm:rounded-xl"
+									onClick={() => setIsAlertOpen(false)}
+								>
 									Cancel
 								</AlertDialogCancel>
 								<AlertDialogAction
+									className="bg-primary-pink hover:bg-opacity-75 rounded-lg sm:rounded-xl"
 									onClick={handleDelete}
-									className="bg-primary-pink text-white"
 								>
-									Continue
+									<Trash2 className="text-primary-green w-6 h-6 md:w-7 md:h-7" />
 								</AlertDialogAction>
 							</AlertDialogFooter>
 						</AlertDialogContent>
