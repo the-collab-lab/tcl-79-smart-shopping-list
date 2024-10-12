@@ -25,7 +25,7 @@ function Login() {
 		<div
 			className={`${darkMode && 'dark'} flex justify-center items-center h-screen`}
 		>
-			<div className="bg-black text-white rounded-xl w-11/12 max-w-lg p-8 shadow-xl">
+			<div className="bg-transparent text-white  w-11/12 max-w-lg p-8 ">
 				<div className="flex justify-center items-center mb-6">
 					{darkMode ? (
 						<img src="grocerease-light.png" alt="Shopping app logo" />
