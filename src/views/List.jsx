@@ -79,7 +79,7 @@ export function List({ data, listPath, listName }) {
 						<Button className="bg-transparent hover:bg-transparent p-0">
 							<SquarePlus
 								aria-label="Add a new item"
-								className="h-7 w-7 text-primary-green dark:text-primary-pink  transition-opacity hover:opacity-75"
+								className="h-7 w-7 text-primary-green dark:text-primary-pink transition-opacity hover:opacity-75"
 							/>
 						</Button>
 					</DialogTrigger>

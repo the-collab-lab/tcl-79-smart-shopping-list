@@ -98,7 +98,10 @@ export default function AddItemForm({ listPath, data, handleOpenModal }) {
 							name="timeFrame"
 							className="border  border-soon text-soon"
 						/>
-						<label htmlFor="soon" className="font-semibold text-sm">
+						<label
+							htmlFor="soon"
+							className="font-semibold text-sm cursor-pointer"
+						>
 							Soon
 						</label>
 					</div>
@@ -109,13 +112,19 @@ export default function AddItemForm({ listPath, data, handleOpenModal }) {
 							name="timeFrame"
 							className="border border-kind-of-soon text-kind-of-soon"
 						/>
-						<label htmlFor="kind-of-soon" className="font-semibold text-sm">
+						<label
+							htmlFor="kind-of-soon"
+							className="font-semibold text-sm cursor-pointer"
+						>
 							Kind of soon
 						</label>
 					</div>
 					<div className="flex flex-col items-center justify-center rounded-xl border border-light-pink gap-4 w-28 h-28 shadow-bottom-right transition-transform duration-200 ease-in-out transform active:scale-95">
-						<RadioGroupItem value="30" id="not-of-soon" name="timeFrame" />
-						<label htmlFor="not of soon" className="font-semibold text-sm">
+						<RadioGroupItem value="30" id="not-soon" name="timeFrame" />
+						<label
+							htmlFor="not-soon"
+							className="font-semibold text-sm cursor-pointer"
+						>
 							Not soon
 						</label>
 					</div>
@@ -141,7 +150,7 @@ export default function AddItemForm({ listPath, data, handleOpenModal }) {
 			<div className="flex w-full">
 				<Button
 					type="submit"
-					className="bg-primary-pink text-black rounded-xl w-full hover:bg-primary-pink hover:bg-opacity-80 text-sm p-6"
+					className="bg-primary-pink text-white rounded-xl w-full hover:bg-primary-pink hover:bg-opacity-90 text-sm p-6"
 				>
 					Add Item
 				</Button>
