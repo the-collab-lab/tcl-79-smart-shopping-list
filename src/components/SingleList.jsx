@@ -34,13 +34,13 @@ export function SingleList({
 					aria-label="Share list"
 					className="text-green-500 hover:text-green-500 dark:text-ruby-pink dark:hover:text-primary-pink hover:text-opacity-80 dark:hover:text-opacity-80 transform hover:scale-110 transition-transform duration-150 sm:hover:scale-125"
 				>
-					<FaShareNodes className="w-5 h-5 sm:w-6 sm:h-6" />
+					<FaShareNodes className="w-5 h-5 md:w-6 md:h-6" />
 				</button>
 				<button
 					aria-label="Delete list"
 					className="text-ruby-pink hover:text-ruby-pink hover:text-opacity-80 dark:text-emerald-500 dark:hover:text-emerald-300 dark:hover:text-opacity-80 transform hover:scale-110 transition-transform duration-150 sm:hover:scale-125"
 				>
-					<Trash2 className="w-5 h-5 sm:w-6 sm:h-6 md:w-7 md:h-7" />
+					<Trash2 className="w-5 h-5 md:w-6 md:h-6" />
 				</button>
 			</div>
 		</li>
