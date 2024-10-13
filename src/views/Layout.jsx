@@ -1,9 +1,10 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import { useState } from 'react';
+import { useContext } from 'react';
 import { Outlet } from 'react-router-dom';
-import './Layout.css';
 import { Toaster } from 'react-hot-toast';
 import { NavBar } from '@/components/NavBar';
+import { Context } from '../Context';
+import './Layout.css';
 
 /**
  * TODO: The links defined in this file don't work!
@@ -14,7 +15,7 @@ import { NavBar } from '@/components/NavBar';
  */
 
 export function Layout() {
-	const [darkMode, setDarkMode] = useState(false);
+	const { darkMode, setDarkMode } = useContext(Context);
 
 	const toggleDarkMode = () => {
 		setDarkMode(!darkMode);
