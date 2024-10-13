@@ -28,3 +28,20 @@ export function getIndicator(item) {
 		return 'Not soon';
 	}
 }
+
+export const getIndicatorColor = (indicator) => {
+	switch (indicator) {
+		case 'Soon':
+			return 'bg-soon';
+		case 'Kind of soon':
+			return 'bg-kind-of-soon';
+		case 'Not soon':
+			return 'bg-not-soon';
+		case 'Inactive':
+			return 'bg-inactive';
+		case 'Overdue':
+			return 'bg-overdue';
+		default:
+			return 'bg-transparent';
+	}
+};

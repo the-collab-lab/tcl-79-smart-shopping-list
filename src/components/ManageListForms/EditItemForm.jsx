@@ -1,23 +1,32 @@
-import { useState } from 'react';
-import { addItem } from '../../api/firebase';
+import { useEffect, useState } from 'react';
+import { editItem } from '../../api/firebase';
 import toast from 'react-hot-toast';
 import { Button } from '../ui/button';
 import { Input } from '../ui/input';
+import { getFutureDate } from '../../utils/dates';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 
-export default function AddItemForm({ listPath, data, handleOpenModal }) {
+export default function EditItemForm({
+	listPath,
+	id,
+	name,
+	quantity,
+	dateNextPurchased,
+	handleOpenModal,
+}) {
 	const [formData, setFormData] = useState({
-		itemName: '',
-		itemQuantity: 1,
-		daysUntilNextPurchase: '',
+		itemName: name || '',
+		itemQuantity: quantity || 1,
+		daysUntilNextPurchase: dateNextPurchased || '',
 	});
 
-	const resetItemName = () => {
-		setFormData((prevFormData) => ({
-			...prevFormData,
-			itemName: '',
-		}));
-	};
+	useEffect(() => {
+		setFormData({
+			itemName: name,
+			itemQuantity: quantity,
+			daysUntilNextPurchase: dateNextPurchased,
+		});
+	}, []);
 
 	const handleSubmit = async (event) => {
 		event.preventDefault();
@@ -28,26 +37,45 @@ export default function AddItemForm({ listPath, data, handleOpenModal }) {
 			.replace(/\s\s*$/, '')
 			.replace(/[^a-zA-Z ]/g, '');
 
-		const match = data.find((item) => item.name === formattedItemName);
+		const formQuantity = parseInt(formData.itemQuantity, 10);
+		const newDateNextPurchased = formData.daysUntilNextPurchase;
 
 		if (formattedItemName.length === 0) {
 			toast.error(`No numbers or special characters.`);
 			resetItemName();
 			return;
 		}
+		// check if any of the values have been edited
+		const hasChanged =
+			formattedItemName !== name ||
+			formQuantity !== quantity ||
+			newDateNextPurchased !== dateNextPurchased;
+
+		// if no changes were made exit early
+		if (!hasChanged) {
+			toast.error('No changes were made.');
+			handleOpenModal();
+			return;
+		}
+
+		let updatedData = {
+			itemName: formattedItemName,
+			itemQuantity: formQuantity,
+		};
+		// check if dateNextPurchased have been edited to use getFutureDate if not use the same date
+		if (newDateNextPurchased !== dateNextPurchased) {
+			const futureDate = parseInt(newDateNextPurchased);
+			updatedData.dateNextPurchased = getFutureDate(futureDate);
+		} else {
+			updatedData.dateNextPurchased = dateNextPurchased;
+		}
 
 		try {
-			if (!match && formattedItemName.length >= 1) {
-				handleOpenModal();
-				await addItem(listPath, { ...formData, itemName: formattedItemName });
-				toast.success(`${formattedItemName} was added to your list`);
-			} else {
-				toast.error(`${formattedItemName} is already on your list`);
-				resetItemName();
-				return;
-			}
+			handleOpenModal();
+			await editItem(listPath, id, updatedData);
+			toast.success(`${formattedItemName} has been updated!`);
 		} catch (error) {
-			toast.error(`Failed to add ${formattedItemName}`);
+			toast.error(`Failed to edit ${formattedItemName}`);
 		}
 	};
 
@@ -91,12 +119,12 @@ export default function AddItemForm({ listPath, data, handleOpenModal }) {
 					className="flex my-2 items-center justify-center gap-4"
 					id="daysUntilNextPurchase"
 				>
-					<div className="flex flex-col items-center justify-center rounded-xl border border-light-pink gap-4 w-28 h-28 shadow-bottom-right transition-transform duration-200 ease-in-out transform active:scale-95">
+					<div className="flex flex-col items-center justify-center rounded-xl border border-light-pink gap-4 w-24 h-24 sm:w-28 sm:h-28 shadow-bottom-right transition-transform duration-200 ease-in-out transform active:scale-95">
 						<RadioGroupItem
 							value="7"
 							id="soon"
 							name="timeFrame"
-							className="border  border-soon text-soon"
+							className="border border-soon text-soon"
 						/>
 						<label
 							htmlFor="soon"
@@ -105,7 +133,7 @@ export default function AddItemForm({ listPath, data, handleOpenModal }) {
 							Soon
 						</label>
 					</div>
-					<div className="flex flex-col items-center justify-center rounded-xl border border-light-pink gap-4 w-28 h-28 shadow-bottom-right transition-transform duration-200 ease-in-out transform active:scale-95">
+					<div className="flex flex-col items-center justify-center rounded-xl border border-light-pink gap-4 w-24 h-24 sm:w-28 sm:h-28 shadow-bottom-right transition-transform duration-200 ease-in-out transform active:scale-95">
 						<RadioGroupItem
 							value="14"
 							id="kind-of-soon"
@@ -119,7 +147,7 @@ export default function AddItemForm({ listPath, data, handleOpenModal }) {
 							Kind of soon
 						</label>
 					</div>
-					<div className="flex flex-col items-center justify-center rounded-xl border border-light-pink gap-4 w-28 h-28 shadow-bottom-right transition-transform duration-200 ease-in-out transform active:scale-95">
+					<div className="flex flex-col items-center justify-center rounded-xl border border-light-pink gap-4 w-24 h-24 sm:w-28 sm:h-28 shadow-bottom-right transition-transform duration-200 ease-in-out transform active:scale-95">
 						<RadioGroupItem value="30" id="not-soon" name="timeFrame" />
 						<label
 							htmlFor="not-soon"
@@ -150,9 +178,9 @@ export default function AddItemForm({ listPath, data, handleOpenModal }) {
 			<div className="flex w-full">
 				<Button
 					type="submit"
-					className="bg-primary-pink text-white rounded-xl w-full hover:bg-primary-pink hover:bg-opacity-90 text-sm p-6"
+					className="bg-primary-pink text-white rounded-xl w-full hover:bg-primary-pink hover:bg-opacity-90 text-sm"
 				>
-					Add Item
+					Apply Changes
 				</Button>
 			</div>
 		</form>

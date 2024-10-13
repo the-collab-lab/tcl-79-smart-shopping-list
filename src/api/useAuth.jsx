@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { auth } from './config.js';
 import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
 import { addUserToDatabase } from './firebase.js';
+import { LogInIcon, LogOutIcon } from 'lucide-react';
 
 /**
  * A button that signs the user in using Google OAuth. When clicked,
@@ -13,7 +14,7 @@ export const SignInButton = () => (
 		type="button"
 		onClick={() => signInWithPopup(auth, new GoogleAuthProvider())}
 	>
-		Sign In
+		<LogInIcon className="hover:text-light-grey" />
 	</button>
 );
 
@@ -22,7 +23,7 @@ export const SignInButton = () => (
  */
 export const SignOutButton = () => (
 	<button type="button" onClick={() => auth.signOut()}>
-		Sign Out
+		<LogOutIcon className="hover:text-light-grey" />
 	</button>
 );
 
@@ -32,16 +33,33 @@ export const SignOutButton = () => (
  * @see https://firebase.google.com/docs/auth/web/start#set_an_authentication_state_observer_and_get_user_data
  */
 export const useAuth = () => {
-	const [user, setUser] = useState(null);
+	const [user, setUser] = useState(() => {
+		const storedUser = localStorage.getItem('user');
+		return storedUser ? JSON.parse(storedUser) : null;
+	});
 
 	useEffect(() => {
-		auth.onAuthStateChanged((user) => {
-			setUser(user);
+		const unsubscribe = auth.onAuthStateChanged((user) => {
 			if (user) {
+				setUser(user);
+				localStorage.setItem('user', JSON.stringify(user));
 				addUserToDatabase(user);
+			} else {
+				setUser(null);
+				localStorage.removeItem('user');
 			}
 		});
+		return () => unsubscribe();
 	}, []);
 
-	return { user };
+	const signIn = async () => {
+		await signInWithPopup(auth, new GoogleAuthProvider());
+	};
+
+	const signOut = async () => {
+		await auth.signOut();
+		localStorage.removeItem('user');
+	};
+
+	return { user, signIn, signOut };
 };

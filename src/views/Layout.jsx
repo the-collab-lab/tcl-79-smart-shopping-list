@@ -1,10 +1,10 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import { Outlet, NavLink } from 'react-router-dom';
-
-import './Layout.css';
-import { useAuth } from '../api';
-import { SignInButton, SignOutButton } from '../api/useAuth';
+import { useContext } from 'react';
+import { Outlet } from 'react-router-dom';
 import { Toaster } from 'react-hot-toast';
+import { NavBar } from '@/components/NavBar';
+import { Context } from '../Context';
+import './Layout.css';
 
 /**
  * TODO: The links defined in this file don't work!
@@ -15,38 +15,25 @@ import { Toaster } from 'react-hot-toast';
  */
 
 export function Layout() {
-	const { user } = useAuth();
+	const { darkMode, setDarkMode } = useContext(Context);
+
+	const toggleDarkMode = () => {
+		setDarkMode(!darkMode);
+	};
+
 	return (
 		<>
-			<div className="Layout">
-				<header className="Layout-header">
-					<h1>Smart shopping list</h1>
-					{!!user ? (
-						<div>
-							<SignOutButton />
-							<p>Welcome, {user.displayName}</p>
-						</div>
-					) : (
-						<SignInButton />
-					)}
-				</header>
-				<main className="Layout-main">
-					<Outlet />
-				</main>
-				<nav className="Nav">
-					<div className="Nav-container">
-						<NavLink to="/" className="Nav-link">
-							Home
-						</NavLink>
-						<NavLink to="/list" className="Nav-link">
-							List
-						</NavLink>
-						<NavLink to="/manage-list" className="Nav-link">
-							Manage List
-						</NavLink>
-					</div>
-				</nav>
-				<Toaster />
+			<div className={`${darkMode && 'dark'} min-h-screen`}>
+				<div className="Layout text-black dark:text-white bg-white dark:bg-black">
+					<NavBar darkMode={darkMode} toggleDarkMode={toggleDarkMode} />
+
+					<main className="mx-auto px-8 md:px-8 lg:px-20 w-full max-w-screen-sm min-h-screen flex flex-col rounded-xl pt-20 pb-[100px]">
+						{/* I have add rounded and padding classes here for the background container that we could add to break up the design from being too white */}
+						<Outlet />
+					</main>
+
+					<Toaster />
+				</div>
 			</div>
 		</>
 	);

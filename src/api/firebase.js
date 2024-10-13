@@ -7,8 +7,8 @@ import {
 	onSnapshot,
 	updateDoc,
 	addDoc,
-	Timestamp,
 	deleteDoc,
+	arrayRemove,
 } from 'firebase/firestore';
 import { useEffect, useState } from 'react';
 import { db } from './config';
@@ -177,7 +177,10 @@ export async function shareList(listPath, currentUserId, recipientEmail) {
  * @param {string} itemData.itemName The name of the item.
  * @param {number} itemData.daysUntilNextPurchase The number of days until the user thinks they'll need to buy the item again.
  */
-export async function addItem(listPath, { itemName, daysUntilNextPurchase }) {
+export async function addItem(
+	listPath,
+	{ itemName, itemQuantity, daysUntilNextPurchase },
+) {
 	const listCollectionRef = collection(db, listPath, 'items');
 	return addDoc(listCollectionRef, {
 		dateCreated: new Date(),
@@ -187,6 +190,7 @@ export async function addItem(listPath, { itemName, daysUntilNextPurchase }) {
 		dateNextPurchased: getFutureDate(daysUntilNextPurchase),
 		dayInterval: daysUntilNextPurchase,
 		name: itemName,
+		quantity: itemQuantity,
 		totalPurchases: 0,
 		checked: false,
 	});
@@ -227,6 +231,25 @@ export async function updateItem(listPath, checked, itemData) {
 	}
 }
 
+export async function editItem(
+	listPath,
+	id,
+	{ itemName, itemQuantity, dateNextPurchased },
+) {
+	const listCollectionRef = collection(db, listPath, 'items');
+	const itemRef = doc(listCollectionRef, id);
+
+	try {
+		await updateDoc(itemRef, {
+			name: itemName,
+			quantity: itemQuantity,
+			dateNextPurchased: dateNextPurchased,
+		});
+	} catch (error) {
+		console.error('There was an error editing the item state: ', error);
+	}
+}
+
 export async function deleteItem(listPath, id) {
 	const listCollectionRef = collection(db, listPath, 'items');
 	const itemRef = doc(listCollectionRef, id);
@@ -236,6 +259,91 @@ export async function deleteItem(listPath, id) {
 		console.error('Error deleting your item', error);
 	}
 }
+
+export async function deleteList(collectionId, document, email) {
+	const listRef = doc(db, collectionId, document);
+	const userRef = doc(db, 'users', email);
+
+	try {
+		//check if list exists for debugging purposes
+		const docSnapshot = await getDoc(listRef);
+		if (!docSnapshot.exists()) {
+			console.log('Document does not exist:', listRef.path);
+			return;
+		} else {
+			console.log('Document exists:', listRef.path);
+		}
+		//actually delete the list
+		await deleteDoc(listRef);
+		console.log('Document deleted:', listRef.path);
+
+		//check if user list exists for debugging purposes
+		const docSnapshot2 = await getDoc(userRef);
+		if (!docSnapshot2.exists()) {
+			console.log('Document does not exist:', userRef.path);
+			return;
+		} else {
+			console.log('Document exists:', userRef.path);
+		}
+		//alert if user not found
+		const userDoc = await getDoc(userRef);
+		if (!userDoc.exists()) {
+			console.log('User document not found:', email);
+			return;
+		}
+		//show sharedLists contents before deleting ref
+		const sharedLists = userDoc.data().sharedLists;
+		console.log('Current sharedLists:', typeof sharedLists, sharedLists);
+		//actually delete ref from array
+		await updateDoc(userRef, {
+			sharedLists: arrayRemove(listRef),
+		});
+		console.log('User document updated');
+	} catch (error) {
+		console.error('Error deleting your list', error);
+	}
+}
+
+// export async function deleteCollection(listPath) {
+// 	const collectionRef = collection(db, listPath);
+// 	const query = collectionRef.orderBy('__name__').limit(500);
+// 	console.log('delete collecton triggered');
+
+// 	return new Promise((resolve, reject) => {
+// 		console.log('inside promise');
+
+// 		deleteQueryBatch(db, query, resolve).catch(reject);
+// 	});
+// }
+
+// async function deleteQueryBatch(db, query, resolve) {
+// 	const snapshot = await query.get();
+// 	console.log('deletequery triggered');
+
+// 	const batchSize = snapshot.size;
+// 	if (batchSize === 0) {
+// 		// When there are no documents left, we are done
+// 		console.log('batch size 0');
+
+// 		resolve();
+// 		return;
+// 	}
+
+// 	// Delete documents in a batch
+// 	const batch = db.batch();
+// 	snapshot.docs.forEach((doc) => {
+// 		console.log('deleted ', doc.ref);
+
+// 		batch.delete(doc.ref);
+// 	});
+// 	await batch.commit();
+
+// 	// Recurse on the next process tick, to avoid
+// 	// exploding the stack.
+// 	process.nextTick(() => {
+// 		deleteQueryBatch(db, query, resolve);
+// 	});
+// }
 
 export function comparePurchaseUrgency(arr) {
 	const groupedItems = {
