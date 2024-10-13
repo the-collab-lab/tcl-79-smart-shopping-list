@@ -15,15 +15,16 @@ import {
 import { Button } from '@/components/ui/button';
 import { SquarePlus } from 'lucide-react';
 
-export function List({ data, listPath, listName }) {
+export function List({ data, listPath, listName, isLoading, setIsLoading }) {
 	const [search, setSearch] = useState('');
 	const [allData, setAllData] = useState([]);
 	const [displayData, setDisplayData] = useState([]);
 	const [isOpen, setIsOpen] = useState(false);
 	const [openItemId, setOpenItemId] = useState(null);
-	const [isLoading, setIsLoading] = useState(true);
+	const [noData, setNoData] = useState(false);
 
 	useEffect(() => {
+		setIsLoading(true);
 		const arrayWithIndicator = data.map((item) => ({
 			...item,
 			indicator: getIndicator(item),
@@ -38,6 +39,13 @@ export function List({ data, listPath, listName }) {
 			setIsLoading(false);
 		}
 	}, [displayData]);
+
+	setTimeout(() => {
+		if (data.length === 0) {
+			setIsLoading(false);
+			setNoData(true);
+		}
+	}, 2000);
 
 	const handleAddModal = () => {
 		if (search.length > 0) {
@@ -75,9 +83,14 @@ export function List({ data, listPath, listName }) {
 								<span className="relative inline-block">{listName}</span>
 							</h1>
 							<img
-								src="/img/underline.png"
+								src="/img/ruby-underline.png"
 								alt="Description"
-								className="absolute bottom-[-12px] -right-3 w-14 h-3"
+								className="absolute bottom-[-12px] -right-3 w-14 h-3 dark:hidden"
+							/>
+							<img
+								src="/img/light-pink-underline.png"
+								alt="Description"
+								className="absolute bottom-[-12px] -right-3 w-14 h-3 hidden dark:block"
 							/>
 						</div>
 					</div>
@@ -89,9 +102,9 @@ export function List({ data, listPath, listName }) {
 							search={search}
 						/>
 						<Dialog open={isOpen} onOpenChange={handleAddModal}>
-							<DialogTrigger asChild>
+							<DialogTrigger asChild className="items-start mt-[19px]">
 								<Button className="bg-transparen hover:bg-transparen p-0">
-									<SquarePlus className="h-7 w-7 text-pink dark:text-green transition-opacity hover:opacity-75" />
+									<SquarePlus className="h-10 w-10 text-primary-green dark:text-primary-pink transition-opacity hover:opacity-75" />
 								</Button>
 							</DialogTrigger>
 							<DialogContent>
@@ -110,27 +123,7 @@ export function List({ data, listPath, listName }) {
 							</DialogContent>
 						</Dialog>
 					</div>
-					<ul className="flex flex-col justify-center space-y-4 w-full max-w-md">
-						{displayData.map((item) => (
-							<ListItem
-								key={item.id}
-								name={item.name}
-								listPath={listPath}
-								id={item.id}
-								quantity={item.quantity}
-								isChecked={item.checked}
-								dateLastPurchased={item.dateLastPurchased}
-								totalPurchases={item.totalPurchases}
-								dayInterval={item.dayInterval}
-								dateCreated={item.dateCreated}
-								dateNextPurchased={item.dateNextPurchased}
-								indicator={item.indicator}
-								isOpen={openItemId === item.id}
-								handleOpenModal={handleEditModal}
-							/>
-						))}
-					</ul>
-					{data.length === 0 && isLoading && (
+					{isLoading ? (
 						<div role="status">
 							<svg
 								aria-hidden="true"
@@ -150,24 +143,45 @@ export function List({ data, listPath, listName }) {
 							</svg>
 							<span className="sr-only">Loading...</span>
 						</div>
+					) : (
+						<ul className="flex flex-col justify-center space-y-4 w-full max-w-md">
+							{displayData.map((item) => (
+								<ListItem
+									key={item.id}
+									name={item.name}
+									listPath={listPath}
+									id={item.id}
+									quantity={item.quantity}
+									isChecked={item.checked}
+									dateLastPurchased={item.dateLastPurchased}
+									totalPurchases={item.totalPurchases}
+									dayInterval={item.dayInterval}
+									dateCreated={item.dateCreated}
+									dateNextPurchased={item.dateNextPurchased}
+									indicator={item.indicator}
+									isOpen={openItemId === item.id}
+									handleOpenModal={handleEditModal}
+								/>
+							))}
+						</ul>
 					)}
-					{displayData.length === 0 && search.length > 0 && (
-						<div className="flex flex-col items-center">
-							<p>No items found. Try searching for a different item!</p>
-						</div>
-					)}
-					{data.length === 0 && !isLoading && (
+					{!isLoading && noData && displayData.length === 0 && (
 						<div className="flex flex-col justify-center items-center gap-4 w-full mx-auto">
 							<p className="text-grey text-center">
 								Your list is empty. Start adding some items now!
 							</p>
 							<Button
-								className="bg-pink text-white rounded-xl w-full hover:bg-pink hover:bg-opacity-75 text-sm font-semibold max-w-[150px]"
+								className="bg-primary-pink text-white rounded-xl dark:bg-primary-green dark:text-black w-full hover:bg-primary-pink hover:bg-opacity-75 text-sm font-semibold max-w-[150px]"
 								id="addFirstItem"
 								onClick={() => setIsOpen((prev) => !prev)}
 							>
 								Add Item
 							</Button>
+						</div>
+					)}
+					{displayData.length === 0 && search.length > 0 && (
+						<div className="flex flex-col items-center">
+							<p>No items found. Try searching for a different item!</p>
 						</div>
 					)}
 				</div>

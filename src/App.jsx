@@ -8,6 +8,8 @@ import Login from './views/Login';
 
 export function App() {
 	const [isModalOpen, setIsModalOpen] = useState(false);
+	const [isLoading, setIsLoading] = useState(false);
+
 	/**
 	 * This custom hook takes the path of a shopping list
 	 * in our database and syncs it with localStorage for later use.
@@ -63,13 +65,20 @@ export function App() {
 									setListPath={setListPath}
 									isModalOpen={isModalOpen}
 									handleShareModalClick={handleShareModalClick}
+									setIsLoading={setIsLoading}
 								/>
 							}
 						/>
 						<Route
 							path="/list"
 							element={
-								<List data={data} listPath={listPath} listName={listName} />
+								<List
+									data={data}
+									listPath={listPath}
+									listName={listName}
+									isLoading={isLoading}
+									setIsLoading={setIsLoading}
+								/>
 							}
 						/>
 					</Route>

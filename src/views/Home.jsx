@@ -9,6 +9,7 @@ export function Home({
 	setListPath,
 	isModalOpen,
 	handleShareModalClick,
+	setIsLoading,
 }) {
 	const [selectedItem, setSelectedItem] = useState('');
 
@@ -54,6 +55,7 @@ export function Home({
 							setListPath={setListPath}
 							handleShareModalClick={handleShareModalClick}
 							setSelectedItem={setSelectedItem}
+							setIsLoading={setIsLoading}
 						/>
 					))}
 				</ul>

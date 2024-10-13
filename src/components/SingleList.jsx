@@ -31,6 +31,7 @@ export function SingleList({
 	setListPath,
 	handleShareModalClick,
 	setSelectedItem,
+	setIsLoading,
 }) {
 	const [isAlertOpen, setIsAlertOpen] = useState(false);
 	const [collectionId, setCollectionId] = useState('');
@@ -44,6 +45,7 @@ export function SingleList({
 	const navigate = useNavigate();
 
 	function handleClick() {
+		setIsLoading(true);
 		setListPath(path);
 		navigate(`/list`);
 	}
