@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 import { ONE_DAY_IN_MILLISECONDS } from '../utils/dates';
 import toast from 'react-hot-toast';
 import { Button } from './ui/button';
-import { Trash2 } from 'lucide-react';
+import { Trash2, Pencil } from 'lucide-react';
 import { getIndicatorColor } from '../utils/helpers';
 import {
 	AlertDialog,
@@ -16,6 +16,16 @@ import {
 	AlertDialogTitle,
 	AlertDialogTrigger,
 } from './ui/alert-dialog';
+import {
+	Dialog,
+	DialogContent,
+	DialogDescription,
+	DialogFooter,
+	DialogHeader,
+	DialogTitle,
+	DialogTrigger,
+} from '@/components/ui/dialog';
+import EditItemForm from './ManageListForms/EditItemForm';
 
 export function ListItem({
 	listPath,
@@ -28,6 +38,9 @@ export function ListItem({
 	dayInterval,
 	dateCreated,
 	indicator,
+	isOpen,
+	handleOpenModal,
+	dateNextPurchased,
 }) {
 	const [isAlertOpen, setIsAlertOpen] = useState(false);
 
@@ -81,7 +94,7 @@ export function ListItem({
 				>
 					<label
 						htmlFor={`${id}`}
-						className="capitalize text-sm hover:font-bold sm:text-lg"
+						className="capitalize text-sm sm:text-base md:text-lg hover:font-bold text-gray-800 dark:text-gray-300"
 					>
 						{name}
 					</label>
@@ -92,7 +105,7 @@ export function ListItem({
 					</div>
 				)}
 			</div>
-			<div className="flex items-center gap-1 sm:gap-2">
+			<div className="flex items-center gap-3">
 				<div
 					className={`${getIndicatorColor(indicator)} rounded-[3px] px-2 sm:rounded-[5px] sm:px-3`}
 				>
@@ -100,43 +113,69 @@ export function ListItem({
 						{indicator}
 					</p>
 				</div>
-				<AlertDialog open={isAlertOpen} onOpenChange={setIsAlertOpen}>
-					<AlertDialogTrigger asChild>
-						<Button
-							className="bg-transparent hover:bg-transparent"
-							type="button"
-							id={id}
-							onClick={() => setIsAlertOpen(true)}
-						>
-							<Trash2 className="w-5 h-5 text-ruby-pink hover:text-opacity-75 dark:text-emerald-500 dark:hover:text-opacity-80 sm:w-6 sm:h-6 md:w-7 md:h-7" />
-						</Button>
-					</AlertDialogTrigger>
-					<AlertDialogContent className="p-6 sm:p-10">
-						<AlertDialogHeader>
-							<AlertDialogTitle className="text-sm text-slate-500 dark:text-slate-400 sm:text-lg">
-								Are you absolutely sure?
-							</AlertDialogTitle>
-							<AlertDialogDescription className="text-black">
-								This action cannot be undone. Do you really want to delete{' '}
-								{name}?
-							</AlertDialogDescription>
-						</AlertDialogHeader>
-						<AlertDialogFooter>
-							<AlertDialogCancel
-								className="bg-white hover:bg-slate-100 px-6 border rounded-lg sm:px-8 sm:rounded-xl"
-								onClick={() => setIsAlertOpen(false)}
+				<div className="flex gap-3 px-1">
+					<Dialog open={isOpen} onOpenChange={() => handleOpenModal(id)}>
+						<DialogTrigger asChild>
+							<Button className="bg-transparent hover:bg-transparent p-0">
+								<Pencil className="w-5 h-5 md:w-6 md:h-6 text-light-grey hover:text-opacity-75 dark:text-emerald-500 dark:hover:text-opacity-80  transform hover:scale-110 transition-transform duration-150 sm:hover:scale-125" />
+							</Button>
+						</DialogTrigger>
+						<DialogContent>
+							<DialogHeader>
+								<DialogTitle>Edit {name}</DialogTitle>
+								<DialogDescription className="text-md md:text-lg">
+									Modify the details of the item you&apos;d like to edit.
+								</DialogDescription>
+							</DialogHeader>
+							<EditItemForm
+								listPath={listPath}
+								name={name}
+								id={id}
+								quantity={quantity}
+								dateNextPurchased={dateNextPurchased}
+								handleOpenModal={handleOpenModal}
+							/>
+							<DialogFooter className="sm:justify-start"></DialogFooter>
+						</DialogContent>
+					</Dialog>
+					<AlertDialog open={isAlertOpen} onOpenChange={setIsAlertOpen}>
+						<AlertDialogTrigger asChild>
+							<Button
+								className="bg-transparent hover:bg-transparent p-0"
+								type="button"
+								id={id}
+								onClick={() => setIsAlertOpen(true)}
 							>
-								Cancel
-							</AlertDialogCancel>
-							<AlertDialogAction
-								className="bg-primary-pink hover:bg-opacity-75 rounded-lg sm:rounded-xl"
-								onClick={handleDelete}
-							>
-								Continue
-							</AlertDialogAction>
-						</AlertDialogFooter>
-					</AlertDialogContent>
-				</AlertDialog>
+								<Trash2 className="w-5 h-5 md:w-6 md:h-6 text-gray-600 hover:text-opacity-75 dark:text-emerald-500 dark:hover:text-opacity-80  transform hover:scale-110 transition-transform duration-150 sm:hover:scale-125" />
+							</Button>
+						</AlertDialogTrigger>
+						<AlertDialogContent className="p-6 sm:p-10">
+							<AlertDialogHeader>
+								<AlertDialogTitle className="text-sm text-slate-800 dark:text-slate-400 sm:text-lg">
+									Are you absolutely sure?
+								</AlertDialogTitle>
+								<AlertDialogDescription className="text-slate-700">
+									This action cannot be undone. Do you really want to delete{' '}
+									{name}?
+								</AlertDialogDescription>
+							</AlertDialogHeader>
+							<AlertDialogFooter>
+								<AlertDialogCancel
+									className="bg-white text-slate-700 hover:bg-slate-100 px-6 border rounded-lg sm:px-8 sm:rounded-xl"
+									onClick={() => setIsAlertOpen(false)}
+								>
+									Cancel
+								</AlertDialogCancel>
+								<AlertDialogAction
+									className="bg-primary-pink text-white hover:bg-opacity-90 px-6 border rounded-lg sm:px-8 sm:rounded-xl"
+									onClick={handleDelete}
+								>
+									Delete
+								</AlertDialogAction>
+							</AlertDialogFooter>
+						</AlertDialogContent>
+					</AlertDialog>
+				</div>
 			</div>
 		</li>
 	);

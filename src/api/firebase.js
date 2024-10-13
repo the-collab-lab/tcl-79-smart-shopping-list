@@ -231,6 +231,25 @@ export async function updateItem(listPath, checked, itemData) {
 	}
 }
 
+export async function editItem(
+	listPath,
+	id,
+	{ itemName, itemQuantity, dateNextPurchased },
+) {
+	const listCollectionRef = collection(db, listPath, 'items');
+	const itemRef = doc(listCollectionRef, id);
+
+	try {
+		await updateDoc(itemRef, {
+			name: itemName,
+			quantity: itemQuantity,
+			dateNextPurchased: dateNextPurchased,
+		});
+	} catch (error) {
+		console.error('There was an error editing the item state: ', error);
+	}
+}
+
 export async function deleteItem(listPath, id) {
 	const listCollectionRef = collection(db, listPath, 'items');
 	const itemRef = doc(listCollectionRef, id);

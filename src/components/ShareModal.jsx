@@ -48,14 +48,14 @@ export default function ShareModal({
 						<button
 							aria-label="Close share button"
 							onClick={handleShareModalClick}
-							className="bg-white  hover:bg-slate-100 hover:bg-opacity-80  px-8 border rounded-xl w-1/2"
+							className="bg-white text-slate-700 hover:bg-slate-100 px-6 border rounded-xl p-3"
 						>
 							Close
 						</button>
 						<button
 							aria-label="Invite user to list"
 							type="submit"
-							className="bg-pink-500  hover:bg-pink-500 hover:bg-opacity-80  py-3 px-8 rounded-xl w-1/2"
+							className="bg-primary-pink text-white hover:bg-opacity-90 px-6 border rounded-xl p-3"
 						>
 							Invite
 						</button>

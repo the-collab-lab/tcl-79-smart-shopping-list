@@ -31,6 +31,7 @@ export function SingleList({
 	setListPath,
 	handleShareModalClick,
 	setSelectedItem,
+	setIsLoading,
 }) {
 	const [isAlertOpen, setIsAlertOpen] = useState(false);
 	const [collectionId, setCollectionId] = useState('');
@@ -44,6 +45,7 @@ export function SingleList({
 	const navigate = useNavigate();
 
 	function handleClick() {
+		setIsLoading(true);
 		setListPath(path);
 		navigate(`/list`);
 	}
@@ -67,21 +69,40 @@ export function SingleList({
 	};
 
 	return (
-		<li className="flex flex-row align-middle justify-between pl-4 pr-4 py-[10px] rounded-[3px] text-[1em] space-x-3 w-full bg-white dark:bg-[#2f3031] text-black dark:text-gray-200 shadow-md shadow-slate-400 dark:shadow-gray-600 border border-gray-300 dark:border-gray-500 mt-2 sm:pl-6 sm:pr-6 sm:py-[14px] sm:rounded-[5px] sm:text-[1.2em] sm:space-x-5">
+		<li className="flex flex-row align-middle justify-between pl-4 pr-4 py-[10px] rounded-[3px] text-[1em] space-x-3 w-full bg-white dark:bg-[#2f3031] text-black dark:text-gray-200 shadow-md shadow-slate-400 dark:shadow-gray-600 border border-gray-300 dark:border-gray-500 mt-2 sm:pl-6 sm:pr-2 sm:py-[14px] sm:rounded-[5px] sm:text-[1.2em] sm:space-x-5">
 			<button
 				className="capitalize text-sm hover:font-bold text-gray-800 dark:text-gray-300 sm:text-lg"
 				onClick={handleClick}
 			>
 				{name}
 			</button>
-			<div className="flex flex-row relative space-x-1 sm:space-x-2">
-				<button
-					onClick={handleShareClick}
-					aria-label="Share list"
-					className="text-green-500 hover:text-green-500 dark:text-ruby-pink dark:hover:text-primary-pink hover:text-opacity-80 dark:hover:text-opacity-80 transform hover:scale-110 transition-transform duration-150 sm:hover:scale-125"
-				>
-					<FaShareNodes className="w-5 h-5 sm:w-6 sm:h-6" />
-				</button>
+			<div className="flex flex-row relative space-x-1 items-center">
+				{getAuth().currentUser.uid === singleListPath ? (
+					<button
+						onClick={handleShareClick}
+						aria-label="Share list"
+						className="text-green-500 hover:text-green-500 dark:text-ruby-pink dark:hover:text-primary-pink hover:text-opacity-80 dark:hover:text-opacity-80 transform hover:scale-110 transition-transform duration-150 sm:hover:scale-125"
+					>
+						<FaShareNodes className="w-5 h-5 md:w-6 md:h-6" />
+					</button>
+				) : (
+					<TooltipProvider>
+						<Tooltip delayDuration={100}>
+							<TooltipTrigger asChild className="p-0 m-0">
+								<Button
+									className="bg-transparent hover:bg-transparent"
+									type="button"
+									onClick={() => setIsAlertOpen(true)}
+								>
+									<FaShareNodes className="w-5 h-5 md:w-6 md:h-6 text-gray-500" />
+								</Button>
+							</TooltipTrigger>
+							<TooltipContent>
+								<p>You cannot share a list you don&#39;t own!</p>
+							</TooltipContent>
+						</Tooltip>
+					</TooltipProvider>
+				)}
 				{getAuth().currentUser.uid === singleListPath ? (
 					<AlertDialog open={isAlertOpen} onOpenChange={setIsAlertOpen}>
 						<AlertDialogTrigger asChild>
@@ -90,7 +111,7 @@ export function SingleList({
 								type="button"
 								onClick={() => setIsAlertOpen(true)}
 							>
-								<Trash2 className="text-pink-500  hover:text-pink-600" />
+								<Trash2 className="w-5 h-5 md:w-6 md:h-6 text-primary-pink hover:text-opacity-75 dark:text-emerald-500 dark:hover:text-opacity-80  transform hover:scale-110 transition-transform duration-150 sm:hover:scale-125" />
 							</Button>
 						</AlertDialogTrigger>
 						<AlertDialogContent>
