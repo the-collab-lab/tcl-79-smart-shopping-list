@@ -46,11 +46,11 @@ function Login() {
 				className="fixed w-16 bottom-16 right-16 p-2 rounded-full text-primary-pink hover:text-primary-pink hover:text-opacity-60 font-semibold"
 			>
 				<abbr title={darkMode ? 'Switch to light mode' : 'Switch to dark mode'}>
-					<button
-						className={`${darkMode && 'dark'} rounded-full text-primary-pink hover:text-opacity-60`}
-					>
-						{darkMode ? <Eclipse /> : <Sun />}
-					</button>
+					{darkMode ? (
+						<Eclipse className="w-8 h-8" />
+					) : (
+						<Sun className="w-8 h-8" />
+					)}
 				</abbr>
 			</Button>
 		</div>
