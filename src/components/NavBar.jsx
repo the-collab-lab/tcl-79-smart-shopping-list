@@ -68,9 +68,7 @@ export function NavBar({ darkMode, toggleDarkMode }) {
 										darkMode ? 'Switch to light mode' : 'Switch to dark mode'
 									}
 								>
-									<button className=" rounded-full text-primary-pink hover:text-opacity-60">
-										{darkMode ? <Eclipse /> : <Sun />}
-									</button>
+									{darkMode ? <Eclipse /> : <Sun />}
 								</abbr>
 							</Button>
 						</div>
@@ -103,9 +101,7 @@ export function NavBar({ darkMode, toggleDarkMode }) {
 										darkMode ? 'Switch to light mode' : 'Switch to dark mode'
 									}
 								>
-									<button className="px-2 rounded-full text-primary-pink hover:text-opacity-60">
-										{darkMode ? <Eclipse /> : <Sun />}
-									</button>
+									{darkMode ? <Eclipse /> : <Sun />}
 								</abbr>
 							</Button>
 							{!!user ? (
