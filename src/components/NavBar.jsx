@@ -22,13 +22,13 @@ export function NavBar({ darkMode, toggleDarkMode }) {
 							<NavLink to="/" className="Nav-link">
 								{darkMode ? (
 									<img
-										src="/src/LOGO-white.png"
+										src="grocerease-light.png"
 										alt="GrocerEase logo"
 										className="w-[200px]"
 									/>
 								) : (
 									<img
-										src="/src/LOGO-black.png"
+										src="grocerease.png"
 										alt="GrocerEase logo"
 										className="w-[200px]"
 									/>
@@ -68,9 +68,7 @@ export function NavBar({ darkMode, toggleDarkMode }) {
 										darkMode ? 'Switch to light mode' : 'Switch to dark mode'
 									}
 								>
-									<button className=" rounded-full text-primary-pink hover:text-opacity-60">
-										{darkMode ? <Eclipse /> : <Sun />}
-									</button>
+									{darkMode ? <Eclipse /> : <Sun />}
 								</abbr>
 							</Button>
 						</div>
@@ -81,13 +79,13 @@ export function NavBar({ darkMode, toggleDarkMode }) {
 						<NavLink to="/" className="Nav-link">
 							{darkMode ? (
 								<img
-									src="/src/LOGO-white.png"
+									src="grocerease-light.png"
 									alt="GrocerEase logo"
 									className="w-[170px]"
 								/>
 							) : (
 								<img
-									src="/src/LOGO-black.png"
+									src="grocerease.png"
 									alt="GrocerEase logo"
 									className="w-[170px]"
 								/>
@@ -103,9 +101,7 @@ export function NavBar({ darkMode, toggleDarkMode }) {
 										darkMode ? 'Switch to light mode' : 'Switch to dark mode'
 									}
 								>
-									<button className="px-2 rounded-full text-primary-pink hover:text-opacity-60">
-										{darkMode ? <Eclipse /> : <Sun />}
-									</button>
+									{darkMode ? <Eclipse /> : <Sun />}
 								</abbr>
 							</Button>
 							{!!user ? (
