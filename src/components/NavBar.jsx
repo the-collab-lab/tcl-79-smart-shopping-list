@@ -22,13 +22,13 @@ export function NavBar({ darkMode, toggleDarkMode }) {
 							<NavLink to="/" className="Nav-link">
 								{darkMode ? (
 									<img
-										src="/src/LOGO-white.png"
+										src="grocerease-light.png"
 										alt="GrocerEase logo"
 										className="w-[200px]"
 									/>
 								) : (
 									<img
-										src="/src/LOGO-black.png"
+										src="grocerease.png"
 										alt="GrocerEase logo"
 										className="w-[200px]"
 									/>
@@ -79,13 +79,13 @@ export function NavBar({ darkMode, toggleDarkMode }) {
 						<NavLink to="/" className="Nav-link">
 							{darkMode ? (
 								<img
-									src="/src/LOGO-white.png"
+									src="grocerease-light.png"
 									alt="GrocerEase logo"
 									className="w-[170px]"
 								/>
 							) : (
 								<img
-									src="/src/LOGO-black.png"
+									src="grocerease.png"
 									alt="GrocerEase logo"
 									className="w-[170px]"
 								/>
