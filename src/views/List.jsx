@@ -14,17 +14,16 @@ import {
 } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
 import { SquarePlus } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 
-export function List({ data, listPath, listName, isLoading, setIsLoading }) {
+export function List({ data, listPath, listName, isLoading }) {
 	const [search, setSearch] = useState('');
 	const [allData, setAllData] = useState([]);
 	const [displayData, setDisplayData] = useState([]);
 	const [isOpen, setIsOpen] = useState(false);
 	const [openItemId, setOpenItemId] = useState(null);
-	const [noData, setNoData] = useState(false);
 
 	useEffect(() => {
-		setIsLoading(true);
 		const arrayWithIndicator = data.map((item) => ({
 			...item,
 			indicator: getIndicator(item),
@@ -33,19 +32,6 @@ export function List({ data, listPath, listName, isLoading, setIsLoading }) {
 		setAllData(urgencyData);
 		setDisplayData(urgencyData);
 	}, [data]);
-
-	useEffect(() => {
-		if (displayData.length > 1) {
-			setIsLoading(false);
-		}
-	}, [displayData]);
-
-	setTimeout(() => {
-		if (data.length === 0) {
-			setIsLoading(false);
-			setNoData(true);
-		}
-	}, 2000);
 
 	const handleAddModal = () => {
 		if (search.length > 0) {
@@ -60,20 +46,38 @@ export function List({ data, listPath, listName, isLoading, setIsLoading }) {
 		setOpenItemId((prevId) => (prevId === id ? null : id));
 	};
 
+	const navigate = useNavigate();
+
+	function handleClick() {
+		navigate('/');
+	}
+
 	return (
 		<>
-			{listPath === '' ? (
-				<div className="flex flex-col space-y-10 justify-center items-center">
+			{listPath === '' || !listPath ? (
+				<div className="flex flex-col space-y-10 justify-center items-center gap-3">
 					<div className="relative inline-block">
 						<h1 className="font-[montserrat] text-3xl font-bold text-gray">
 							<span className="relative inline-block">No list selected</span>
 						</h1>
 						<img
-							src="/img/underline.png"
+							src="/img/ruby-underline.png"
 							alt="Description"
-							className="absolute bottom-[-12px] -right-3 w-14 h-3"
+							className="absolute bottom-[-12px] -right-3 w-14 h-3 dark:hidden"
+						/>
+						<img
+							src="/img/light-pink-underline.png"
+							alt="Description"
+							className="absolute bottom-[-12px] -right-3 w-14 h-3 hidden dark:block"
 						/>
 					</div>
+					<Button
+						onClick={handleClick}
+						className="bg-ruby-pink text-white rounded-xl dark:bg-primary-green dark:text-black w-full hover:bg-ruby-pink dark:hover:bg-primary-green hover:bg-opacity-75 dark:hover:bg-opacity-75 text-sm md:text-base font-semibold max-w-[250px]"
+					>
+						<SquarePlus className="h-5 w-5 md:w-6 md:h-6 mr-2" />
+						Let&#39;s get you started!
+					</Button>
 				</div>
 			) : (
 				<div className="flex flex-col space-y-10 justify-center items-center">
@@ -104,7 +108,7 @@ export function List({ data, listPath, listName, isLoading, setIsLoading }) {
 						<Dialog open={isOpen} onOpenChange={handleAddModal}>
 							<DialogTrigger asChild className="items-start mt-[19px]">
 								<Button className="bg-transparen hover:bg-transparen p-0">
-									<SquarePlus className="h-10 w-10 text-primary-green dark:text-primary-pink transition-opacity hover:opacity-75" />
+									<SquarePlus className="h-10 w-10 mt-2 text-primary-green dark:text-primary-pink transition-opacity hover:opacity-75" />
 								</Button>
 							</DialogTrigger>
 							<DialogContent>
@@ -165,13 +169,13 @@ export function List({ data, listPath, listName, isLoading, setIsLoading }) {
 							))}
 						</ul>
 					)}
-					{!isLoading && noData && displayData.length === 0 && (
+					{!isLoading && data.length === 0 && (
 						<div className="flex flex-col justify-center items-center gap-4 w-full mx-auto">
 							<p className="text-grey text-center">
 								Your list is empty. Start adding some items now!
 							</p>
 							<Button
-								className="bg-primary-pink text-white rounded-xl dark:bg-primary-green dark:text-black w-full hover:bg-primary-pink hover:bg-opacity-75 text-sm font-semibold max-w-[150px]"
+								className="bg-primary-pink text-white rounded-xl dark:bg-primary-green dark:text-black w-full hover:bg-primary-pink dark:hover:bg-primary-green hover:bg-opacity-75 dark:hover:bg-opacity-75 text-sm font-semibold max-w-[150px]"
 								id="addFirstItem"
 								onClick={() => setIsOpen((prev) => !prev)}
 							>
