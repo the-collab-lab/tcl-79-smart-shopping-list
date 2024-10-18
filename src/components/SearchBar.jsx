@@ -14,8 +14,8 @@ export function SearchBar({ allData, setDisplayData, setSearch, search }) {
 	};
 
 	return (
-		<form className="relative w-full -top-[3px]">
-			<label htmlFor="shoppingList" className="text-sm font-light">
+		<form className="relative w-full">
+			<label htmlFor="shoppingList" className="text-sm font-light pb-2">
 				Filter lists
 			</label>
 			<Input
@@ -24,9 +24,9 @@ export function SearchBar({ allData, setDisplayData, setSearch, search }) {
 				value={search}
 				placeholder="Search..."
 				onChange={handleInputChange}
-				className="border-[1px] rounded-[5px] text-[1em] h-[3rem] pl-10 focus-visible:outline-none focus:ring-1 focus:ring-primary-green text-black dark:text-white bg-white dark:bg-bg-black"
+				className="border-[1px] rounded-[5px] mt-2 text-[1em] h-[3rem] pl-10 focus-visible:outline-none focus:ring-1 focus:ring-primary-green text-black dark:text-white bg-white dark:bg-bg-black"
 			/>
-			<span className="absolute inset-y-0 left-0  top-6 flex items-center pl-3 pointer-events-none">
+			<span className="absolute inset-y-0 left-0 top-8 flex items-center pl-3 pointer-events-none">
 				<ListFilter className="h-5 w-5 text-grey" />
 			</span>
 		</form>

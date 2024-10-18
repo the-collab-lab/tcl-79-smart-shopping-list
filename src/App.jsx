@@ -8,7 +8,6 @@ import Login from './views/Login';
 
 export function App() {
 	const [isModalOpen, setIsModalOpen] = useState(false);
-	const [isLoading, setIsLoading] = useState(false);
 
 	/**
 	 * This custom hook takes the path of a shopping list
@@ -43,7 +42,7 @@ export function App() {
 	 * This custom hook takes our token and fetches the data for our list.
 	 * Check ./api/firestore.js for its implementation.
 	 */
-	const data = useShoppingListData(listPath);
+	const { data, isLoading } = useShoppingListData(listPath);
 
 	const handleShareModalClick = () => {
 		console.log('isModalOpen', isModalOpen);
@@ -65,7 +64,6 @@ export function App() {
 									setListPath={setListPath}
 									isModalOpen={isModalOpen}
 									handleShareModalClick={handleShareModalClick}
-									setIsLoading={setIsLoading}
 								/>
 							}
 						/>
@@ -77,7 +75,6 @@ export function App() {
 									listPath={listPath}
 									listName={listName}
 									isLoading={isLoading}
-									setIsLoading={setIsLoading}
 								/>
 							}
 						/>

@@ -31,10 +31,10 @@ export function SingleList({
 	setListPath,
 	handleShareModalClick,
 	setSelectedItem,
-	setIsLoading,
 }) {
 	const [isAlertOpen, setIsAlertOpen] = useState(false);
 	const [collectionId, setCollectionId] = useState('');
+	const [shouldNavigate, setShouldNavigate] = useState(false);
 	const singleListPath = path.split('/')[0];
 	const email = getAuth().currentUser.email;
 
@@ -44,10 +44,16 @@ export function SingleList({
 
 	const navigate = useNavigate();
 
+	useEffect(() => {
+		if (shouldNavigate) {
+			navigate('/list');
+			setShouldNavigate(false);
+		}
+	}, [shouldNavigate]);
+
 	function handleClick() {
-		setIsLoading(true);
 		setListPath(path);
-		navigate(`/list`);
+		setShouldNavigate(true);
 	}
 
 	const handleShareClick = () => {
@@ -149,7 +155,7 @@ export function SingleList({
 									type="button"
 									onClick={() => setIsAlertOpen(true)}
 								>
-									<Trash2 className="text-gray-500" />
+									<Trash2 className="w-5 h-5 md:w-6 text-gray-500" />
 								</Button>
 							</TooltipTrigger>
 							<TooltipContent>
