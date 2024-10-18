@@ -117,7 +117,7 @@ export function ListItem({
 					<Dialog open={isOpen} onOpenChange={() => handleOpenModal(id)}>
 						<DialogTrigger asChild>
 							<Button className="bg-transparent hover:bg-transparent p-0">
-								<Pencil className="w-5 h-5 md:w-6 md:h-6 text-light-grey hover:text-opacity-75 dark:text-emerald-500 dark:hover:text-opacity-80  transform hover:scale-110 transition-transform duration-150 sm:hover:scale-125" />
+								<Pencil className="w-5 h-5 text-light-grey hover:text-opacity-75 dark:text-emerald-500 dark:hover:text-opacity-80  transform hover:scale-110 transition-transform duration-150 sm:hover:scale-125" />
 							</Button>
 						</DialogTrigger>
 						<DialogContent>
@@ -146,7 +146,7 @@ export function ListItem({
 								id={id}
 								onClick={() => setIsAlertOpen(true)}
 							>
-								<Trash2 className="w-5 h-5 md:w-6 md:h-6 text-gray-600 hover:text-opacity-75 dark:text-emerald-500 dark:hover:text-opacity-80  transform hover:scale-110 transition-transform duration-150 sm:hover:scale-125" />
+								<Trash2 className="w-5 h-5 text-gray-600 hover:text-opacity-75 dark:text-emerald-500 dark:hover:text-opacity-80  transform hover:scale-110 transition-transform duration-150 sm:hover:scale-125" />
 							</Button>
 						</AlertDialogTrigger>
 						<AlertDialogContent className="p-6 sm:p-10">

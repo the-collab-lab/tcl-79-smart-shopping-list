@@ -89,7 +89,7 @@ export function SingleList({
 						aria-label="Share list"
 						className="text-green-500 hover:text-green-500 dark:text-ruby-pink dark:hover:text-primary-pink hover:text-opacity-80 dark:hover:text-opacity-80 transform hover:scale-110 transition-transform duration-150 sm:hover:scale-125"
 					>
-						<FaShareNodes className="w-5 h-5 md:w-6 md:h-6" />
+						<FaShareNodes className="w-5 h-5" />
 					</button>
 				) : (
 					<TooltipProvider>
@@ -100,7 +100,7 @@ export function SingleList({
 									type="button"
 									onClick={() => setIsAlertOpen(true)}
 								>
-									<FaShareNodes className="w-5 h-5 md:w-6 md:h-6 text-gray-500" />
+									<FaShareNodes className="w-5 h-5 text-gray-500" />
 								</Button>
 							</TooltipTrigger>
 							<TooltipContent>
@@ -117,7 +117,7 @@ export function SingleList({
 								type="button"
 								onClick={() => setIsAlertOpen(true)}
 							>
-								<Trash2 className="w-5 h-5 md:w-6 md:h-6 text-primary-pink hover:text-opacity-75 dark:text-emerald-500 dark:hover:text-opacity-80  transform hover:scale-110 transition-transform duration-150 sm:hover:scale-125" />
+								<Trash2 className="w-5 h-5 text-primary-pink hover:text-opacity-75 dark:text-emerald-500 dark:hover:text-opacity-80  transform hover:scale-110 transition-transform duration-150 sm:hover:scale-125" />
 							</Button>
 						</AlertDialogTrigger>
 						<AlertDialogContent>
@@ -155,7 +155,7 @@ export function SingleList({
 									type="button"
 									onClick={() => setIsAlertOpen(true)}
 								>
-									<Trash2 className="w-5 h-5 md:w-6 text-gray-500" />
+									<Trash2 className="w-5 h-5 text-gray-500" />
 								</Button>
 							</TooltipTrigger>
 							<TooltipContent>
