@@ -4,7 +4,6 @@ import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Eclipse, Sun } from 'lucide-react';
 import { Context } from '../Context';
-import './Login.css';
 
 function Login() {
 	const { darkMode, setDarkMode } = useContext(Context);
